@@ -3,9 +3,9 @@ export class ExpenseModel{
 
   id: number;
   amount: number;
-  currency: String;
-  name: String;
-  tags: string;
-  user: number;
+  currency: string;
+  name: string;
+  // tags: string;
+  // user: number;
 
 }

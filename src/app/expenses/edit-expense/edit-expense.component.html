@@ -1,1 +1,29 @@
-<p>edit-expense works!</p>
+<div class="container">
+  <div class="row">
+    <hr />
+    <div class="create-post-container col-md-9">
+      <form class="post-form" [formGroup]="editExpenseForm" (ngSubmit)="updateExpense()">
+        <div class="form-group">
+          <div class="create-post-heading">Create Post</div>
+          <hr />
+          <input type="text" formControlName="name" class="form-control" style="margin-top: 5px"
+                 placeholder="Title">
+          <input type="text" formControlName="currency" class="form-control" style="margin-top: 5px"
+                 placeholder="currency">
+
+          <input type="number" class="form-control" formControlName="amount" style="margin-top: 5px" placeholder="amount">
+
+
+
+
+          <span>
+              <div style="margin-top: 5px" class="float-right">
+                <button (click)="discardExpense()" class="btn">Discard</button>
+                <button class="btn btn-primary">Update</button>
+              </div>
+            </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
