@@ -1,0 +1,41 @@
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Currency</th>
+          <th scope="col">tags</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let expense of expenses">
+          <th scope="row">{{expense.id}}</th>
+          <td>{{expense.name}}</td>
+          <td>{{expense.amount}}</td>
+          <td>{{expense.currency}}</td>
+          <td>{{expense.tags}}</td>
+          <td>
+            <a [routerLink]="['/edit/expenses/', expense.id]" class="btn">
+              <svg class="bi me-2" width="20" height="20" fill="navy" >
+                <use xlink:href="bootstrap-icons.svg#pencil-square"/></svg>
+            </a>
+            <a (click)="deleteExpenseConfirmation(expense)" class="btn">
+              <svg class="bi me-2" width="20"  height="20"fill="red" >
+                <use xlink:href="bootstrap-icons.svg#trash3"/></svg>
+            </a>
+
+          </td>
+        </tr>
+
+        </tbody>
+      </table>    </div>
+
+
+
+  </div>
+</div>
