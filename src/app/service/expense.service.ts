@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ExpenseModel} from "./expense-model";
+import {ExpenseModel} from "./models/expense-model";
 import {ExpenseRequestPayload} from "../expenses/create-expense/expense.request.payload";
 
 @Injectable({
@@ -17,8 +17,8 @@ export class ExpenseService {
 
   }
 
-  getExpense(expense: ExpenseModel) :Observable<ExpenseModel>{
-    return this.http.get<ExpenseModel>(`${this.baseURL}?id=${expense.id}`);
+  getExpense(expense: string) :Observable<ExpenseModel>{
+    return this.http.get<ExpenseModel>(`${this.baseURL}?id=${expense}`);
   }
 
   deleteExpense(expense: ExpenseModel):Observable<ExpenseModel>{

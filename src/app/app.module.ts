@@ -21,6 +21,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { UserprofileComponent } from './auth/user-profile/userprofile.component';
 import { CreateExpenseComponent } from './expenses/create-expense/create-expense.component';
 import { EditExpenseComponent } from './expenses/edit-expense/edit-expense.component';
+import { TagsComponent } from './tags/tags.component';
+import { CreateIncomeComponent } from './income/create-income/create-income.component';
+import { UpdateIncomeComponent } from './income/update-income/update-income.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { EditExpenseComponent } from './expenses/edit-expense/edit-expense.compo
     IncomeComponent,
     UserprofileComponent,
     CreateExpenseComponent,
-    EditExpenseComponent
+    EditExpenseComponent,
+    TagsComponent,
+    CreateIncomeComponent,
+    UpdateIncomeComponent
   ],
   imports: [
     BrowserModule,

@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ExpenseService} from "../../service/expense.service";
-import {ExpenseModel} from "../../service/expense-model";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ExpenseModel} from "../../service/models/expense-model";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {first} from "rxjs";
 
 @Component({
   selector: 'app-edit-expense',
@@ -12,61 +13,63 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class EditExpenseComponent implements OnInit{
 
-  editExpenseForm: FormGroup;
-  expenseModel: ExpenseModel;
+  expenseForm: FormGroup ;
+  expenseId: string;
+  expenseModel: ExpenseModel = new ExpenseModel();
 
   constructor(private toastr: ToastrService,
+              private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
               private expenseService: ExpenseService) {
-    this.expenseModel = {
-      id: 0,
-      name: '',
-      amount: 0,
-      // tags: '',
-      currency: ''
-    }
+
   }
 
   ngOnInit(): void {
     this.expenseModel.id = this.route.snapshot.params['expenseID'];
-    this.editExpenseForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      currency: new FormControl('', Validators.required),
-      // tags: new FormControl('', Validators.required),
-      amount: new FormControl('', Validators.required)
-    });
+    this.expenseId = this.route.snapshot.params['expenseID'];
+
+    this.expenseForm = this.formBuilder.group(
+      {
+        name: ['', Validators.required],
+        currency: ['', Validators.required],
+        // tags: new FormControl('', Validators.required),
+        amount: ['', Validators.required]
+      }
+    )
     this.getExpenseById();
-    // console.log(this.editExpenseForm)
   }
+
 
   private getExpenseById() {
-    this.expenseService.getExpense(this.expenseModel).subscribe((data)=>{
-      if(data != null){
-        var resultData = data;
-        if(resultData){
-          this.editExpenseForm = new FormGroup({
-            name: new FormControl(resultData.name, Validators.required),
-            currency: new FormControl(resultData.currency, Validators.required),
-            // tags: new FormControl('', Validators.required),
-            amount: new FormControl(resultData.amount, Validators.required)
-          })
-
-        }
-      }
-    })
-  };
+    this.expenseService.getExpense(this.expenseId)
+      .pipe(first())
+      .subscribe(x => this.expenseForm.patchValue(x) )
+  }
 
   updateExpense(){
-    this.expenseModel.name = this.editExpenseForm.get('name')?.value;
-    this.expenseModel.currency = this.editExpenseForm.get('currency')?.value;
+    this.expenseModel.name = this.expenseForm.get('name')?.value;
+    this.expenseModel.currency = this.expenseForm.get('currency')?.value;
     // this.expensePayload.tags = this.createExpenseForm.get('tags')?.value;
-    this.expenseModel.amount = this.editExpenseForm.get('amount')?.value;
+    this.expenseModel.amount = this.expenseForm.get('amount')?.value;
 
-    this.expenseService.updateExpense(this.expenseModel).subscribe((data)=>{
-      this.router.navigateByUrl('expenses');
-    })
-  }
+    // this.expenseService.updateExpense(this.expenseModel).subscribe((data)=>{
+    //         this.router.navigateByUrl('expenses');
+    // })
+    this.expenseService.updateExpense(this.expenseModel).subscribe({
+      next: () => {
+        this.toastr.success('Updated Successful')
+        this.router.navigateByUrl('expenses')
+      },
+      error: err => {
+        this.toastr.error("something gone wrong")
+      }
+
+    });
+    }
+
+
+
 
   discardExpense(){
     this.router.navigateByUrl('expenses')
