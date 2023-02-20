@@ -8,10 +8,6 @@ import {NgModalConfirm} from "../shared/NgModalConfiirm";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {filter} from "rxjs";
-
-
-
 
 const MODALS: {[name: string]: Type<any>} = { deleteModal: NgModalConfirm,};
 
@@ -24,7 +20,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
 
   displayedColumns: string[] = ['id', 'name', 'amount', 'currency', 'tags', 'option'];
   dataSource = new MatTableDataSource<ExpenseModel>();
-  expenses: Array<ExpenseModel> = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,7 +33,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit(): void {
     this.getAllExpenses();
-    this.getAllExpenses2();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = (data, filter) => {
@@ -48,19 +42,13 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.getAllExpenses2();
-    // this.getAllExpenses();
-     }
+    this.getAllExpenses();
+        }
+
 
   getAllExpenses(){
-    this.expenseService.getAllExpenses().subscribe(expense => this.expenses = expense);
-  }
-  getAllExpenses2(){
     this.expenseService.getAllExpenses().subscribe(expense => {
       this.dataSource.data = expense;
-      // this.dataSource.paginator= this.paginator;
-      // this.dataSource.sort = this.sort;
-
     });
   }
 
