@@ -5,6 +5,8 @@ import {ExpenseService} from "../../service/expense.service";
 import {ExpenseModel} from "../../service/models/expense-model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {first} from "rxjs";
+import {TagModel} from "../../service/models/tag-model";
+import {TagsService} from "../../service/tags.service";
 
 @Component({
   selector: 'app-edit-expense',
@@ -16,31 +18,40 @@ export class EditExpenseComponent implements OnInit{
   expenseForm: FormGroup ;
   expenseId: string;
   expenseModel: ExpenseModel = new ExpenseModel();
+  tagsList: Array<TagModel> = []
+
 
   constructor(private toastr: ToastrService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private expenseService: ExpenseService) {
+              private expenseService: ExpenseService,
+              private tagsService: TagsService) {
 
   }
 
   ngOnInit(): void {
     this.expenseModel.id = this.route.snapshot.params['expenseID'];
     this.expenseId = this.route.snapshot.params['expenseID'];
+    this.getAllTags();
 
     this.expenseForm = this.formBuilder.group(
       {
         name: ['', Validators.required],
         currency: ['', Validators.required],
-        // tags: new FormControl('', Validators.required),
+        tags: [[], Validators.required],
         amount: ['', Validators.required]
       }
     )
     this.getExpenseById();
   }
 
-
+  private getAllTags() {
+    this.tagsService.getAllTags().subscribe(tag => this.tagsList = tag)
+  }
+  compare(val1:any, val2:any): boolean{
+    return val1.id === val2.id;
+  };
   private getExpenseById() {
     this.expenseService.getExpense(this.expenseId)
       .pipe(first())
@@ -50,12 +61,9 @@ export class EditExpenseComponent implements OnInit{
   updateExpense(){
     this.expenseModel.name = this.expenseForm.get('name')?.value;
     this.expenseModel.currency = this.expenseForm.get('currency')?.value;
-    // this.expensePayload.tags = this.createExpenseForm.get('tags')?.value;
+    this.expenseModel.tags = this.expenseForm.get('tags')?.value;
     this.expenseModel.amount = this.expenseForm.get('amount')?.value;
 
-    // this.expenseService.updateExpense(this.expenseModel).subscribe((data)=>{
-    //         this.router.navigateByUrl('expenses');
-    // })
     this.expenseService.updateExpense(this.expenseModel).subscribe({
       next: () => {
         this.toastr.success('Updated Successful')
@@ -67,9 +75,6 @@ export class EditExpenseComponent implements OnInit{
 
     });
     }
-
-
-
 
   discardExpense(){
     this.router.navigateByUrl('expenses')

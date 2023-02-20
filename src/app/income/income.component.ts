@@ -1,11 +1,10 @@
-import {Component, OnInit, Type} from '@angular/core';
+import {Component, Input, OnInit, Type} from '@angular/core';
 import {NgModalConfirm} from "../shared/NgModalConfiirm";
 import {IncomeModel} from "../service/models/income-model";
 import {IncomeService} from "../service/income.service";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from "ngx-toastr";
-import {ExpenseModel} from "../service/models/expense-model";
 
 const MODALS: {[name: string]: Type<any>}= {deleteModal: NgModalConfirm};
 
@@ -27,6 +26,8 @@ export class IncomeComponent implements OnInit{
   ngOnInit(): void {
     this.getAllIncomes();
   }
+
+
 
   private getAllIncomes() {
     this.incomeService.getAllIncomes().subscribe(income => this.incomes = income);

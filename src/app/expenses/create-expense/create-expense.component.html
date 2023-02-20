@@ -4,23 +4,44 @@
     <div class="create-post-container col-md-9">
       <form class="post-form" [formGroup]="createExpenseForm" (ngSubmit)="createExpense()">
         <div class="form-group">
-          <div class="create-post-heading">Create Post</div>
+          <div class="create-post-heading">Create Expense</div>
           <hr />
-          <input type="text" [formControlName]="'name'" class="form-control" style="margin-top: 5px"
-                 placeholder="Title">
-          <input type="text" [formControlName]="'currency'" class="form-control" style="margin-top: 5px"
-                 placeholder="currency">
-<!--          <input type="text" [formControlName]="'tags'" class="form-control" style="margin-top: 5px"-->
-<!--                 placeholder="tags">-->
-          <input type="number" class="form-control" [formControlName]="'amount'" style="margin-top: 5px" placeholder="amount">
+<!--          <input type="text" [formControlName]="'name'" class="form-control" style="margin-top: 5px"-->
+<!--                 placeholder="Title">-->
+<!--          <input type="text" [formControlName]="'currency'" class="form-control" style="margin-top: 5px"-->
+<!--                 placeholder="currency">-->
+<!--&lt;!&ndash;          <input type="text" [formControlName]="'tags'" class="form-control" style="margin-top: 5px"&ndash;&gt;-->
+<!--&lt;!&ndash;                 placeholder="tags">&ndash;&gt;-->
+<!--          <input type="number" class="form-control" [formControlName]="'amount'" style="margin-top: 5px" placeholder="amount">-->
 
 
-
+          <mat-form-field [style.width.%]=100 appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Title" [formControlName]="'name'">
+          </mat-form-field>
+          <mat-form-field [style.width.%]=100 appearance="fill" style="margin-top: 5px">
+            <mat-label>Tags</mat-label>
+            <mat-select multiple [formControlName]="'tags'" >
+              <mat-option *ngFor="let tag of tagsList" [value]="tag">
+                {{tag.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxLayout="row">
+            <mat-form-field [style.width.%]=80 appearance="fill" >
+              <mat-label>amount</mat-label>
+              <input matInput type="number" class="text-end" placeholder="0.00" step='0.01' [formControlName]="'amount'">
+            </mat-form-field>
+            <mat-form-field [style.width.%]=20 appearance="fill" >
+              <mat-label>Currency</mat-label>
+              <input matInput placeholder="Currency" [formControlName]="'currency'">
+            </mat-form-field>
+          </div>
 
           <span>
               <div style="margin-top: 5px" class="float-right">
-                <button (click)="discardExpense()" class="btnDiscard">Discard</button>
-                <button class="btnCreatePost">Create</button>
+                <button (click)="discardExpense()" class="btn btn-outline-secondary">Discard</button>
+                <button class="btn btn-primary">Create</button>
               </div>
             </span>
         </div>

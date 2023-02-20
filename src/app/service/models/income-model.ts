@@ -1,3 +1,5 @@
+import {TagModel} from "./tag-model";
+
 export class IncomeModel{
 
 
@@ -5,7 +7,7 @@ export class IncomeModel{
   amount: number;
   currency: string;
   name: string;
-  // tags: string;
+  tags: TagModel[];
   // user: number;
 
 }

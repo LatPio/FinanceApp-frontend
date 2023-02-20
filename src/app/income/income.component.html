@@ -1,1 +1,45 @@
-<p>income works!</p>
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Currency</th>
+          <th scope="col">tags</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let income of incomes">
+          <th scope="row">{{income.id}}</th>
+          <td>{{income.name}}</td>
+          <td>{{income.amount}}</td>
+          <td>{{income.currency}}</td>
+          <td class="horizontal-list">
+            <mat-chip-listbox>
+              <mat-chip *ngFor="let tag of income.tags">{{tag.name}}</mat-chip>
+            </mat-chip-listbox>
+          </td>
+          <td>
+            <a [routerLink]="['/edit/income/', income.id]" class="btn">
+              <svg class="bi me-2" width="20" height="20" fill="navy" >
+                <use xlink:href="bootstrap-icons.svg#pencil-square"/></svg>
+            </a>
+            <a (click)="deleteIncomeConfirmation(income)" class="btn">
+              <svg class="bi me-2" width="20"  height="20"fill="red" >
+                <use xlink:href="bootstrap-icons.svg#trash3"/></svg>
+            </a>
+
+          </td>
+        </tr>
+
+        </tbody>
+      </table>    </div>
+
+
+
+  </div>
+</div>

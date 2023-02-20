@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './auth/login/login.component';
 import {NgxWebstorageModule} from "ngx-webstorage";
@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { HomeComponent } from './home/home.component';
 import {TokenInterceptor} from "./token-interceptor";
-import {MatTableModule} from "@angular/material/table";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { IncomeComponent } from './income/income.component';
@@ -24,7 +24,17 @@ import { EditExpenseComponent } from './expenses/edit-expense/edit-expense.compo
 import { TagsComponent } from './tags/tags.component';
 import { CreateIncomeComponent } from './income/create-income/create-income.component';
 import { UpdateIncomeComponent } from './income/update-income/update-income.component';
-
+import { CreateTagComponent } from './tags/create-tag/create-tag.component';
+import { UpdateTagComponent } from './tags/update-tag/update-tag.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {NgModalConfirm} from "./shared/NgModalConfiirm";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,19 +50,34 @@ import { UpdateIncomeComponent } from './income/update-income/update-income.comp
     EditExpenseComponent,
     TagsComponent,
     CreateIncomeComponent,
-    UpdateIncomeComponent
+    UpdateIncomeComponent,
+    CreateTagComponent,
+    UpdateTagComponent,
+    NgModalConfirm
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgxWebstorageModule.forRoot(),
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    MatTableModule,
-    NgbModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgxWebstorageModule.forRoot(),
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        MatTableModule,
+        NgbModule,
+        FormsModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatSelectModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+
+
+
+    ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

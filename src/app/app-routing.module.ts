@@ -10,6 +10,10 @@ import {AuthGuard} from "./auth/auth.guard";
 import {CreateExpenseComponent} from "./expenses/create-expense/create-expense.component";
 import {EditExpenseComponent} from "./expenses/edit-expense/edit-expense.component";
 import {TagsComponent} from "./tags/tags.component";
+import {CreateIncomeComponent} from "./income/create-income/create-income.component";
+import {UpdateIncomeComponent} from "./income/update-income/update-income.component";
+import {CreateTagComponent} from "./tags/create-tag/create-tag.component";
+import {UpdateTagComponent} from "./tags/update-tag/update-tag.component";
 
 const routes: Routes = [
 
@@ -18,10 +22,15 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'user-profile', component: UserprofileComponent, canActivate: [AuthGuard]},
   {path: 'income', component: IncomeComponent, canActivate: [AuthGuard]},
+  {path: 'add/income', component: CreateIncomeComponent, canActivate: [AuthGuard]},
+  {path: 'edit/income/:incomeID', component: UpdateIncomeComponent, canActivate: [AuthGuard]},
   {path: 'expenses', component: ExpensesComponent,  canActivate: [AuthGuard]},
   {path: 'add/expenses', component: CreateExpenseComponent,  canActivate: [AuthGuard]},
   {path: 'edit/expenses/:expenseID', component: EditExpenseComponent,  canActivate: [AuthGuard]},
-  {path: 'tags', component: TagsComponent,  canActivate: [AuthGuard]}
+  {path: 'tags', component: TagsComponent,  canActivate: [AuthGuard]},
+  {path: 'add/tags', component: CreateTagComponent,  canActivate: [AuthGuard]},
+  {path: 'edit/tags/:tagID', component: UpdateTagComponent,  canActivate: [AuthGuard]}
+
 
 ];
 

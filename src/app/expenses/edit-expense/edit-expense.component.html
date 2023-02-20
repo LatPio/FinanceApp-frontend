@@ -4,16 +4,37 @@
     <div class="create-post-container col-md-9">
       <form class="post-form" [formGroup]="expenseForm" (ngSubmit)="updateExpense()">
         <div class="form-group">
-          <div class="create-post-heading">Create Post</div>
+          <div class="create-post-heading">Update Expense</div>
           <hr />
-          <input type="text" formControlName="name" class="form-control" style="margin-top: 5px"
-                 placeholder="Title">
-          <input type="text" formControlName="currency" class="form-control" style="margin-top: 5px"
-                 placeholder="currency">
+<!--          <input type="text" formControlName="name" class="form-control" style="margin-top: 5px"-->
+<!--                 placeholder="Title">-->
+<!--          <input type="text" formControlName="currency" class="form-control" style="margin-top: 5px"-->
+<!--                 placeholder="currency">-->
 
-          <input type="number" class="form-control" formControlName="amount" style="margin-top: 5px" placeholder="amount">
+<!--          <input type="number" class="form-control" formControlName="amount" style="margin-top: 5px" placeholder="amount">-->
 
-
+          <mat-form-field [style.width.px]=500 appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Title" [formControlName]="'name'">
+          </mat-form-field>
+          <mat-form-field [style.width.px]=500 appearance="fill" style="margin-top: 5px">
+            <mat-label>Tags</mat-label>
+            <mat-select multiple [formControlName]="'tags'" [compareWith]="compare">
+              <mat-option *ngFor="let tag of tagsList" [value]="tag">
+                {{tag.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxLayout="row">
+            <mat-form-field [style.width.px]=400 appearance="fill" >
+              <mat-label>amount</mat-label>
+              <input matInput placeholder="Amount" [formControlName]="'amount'">
+            </mat-form-field>
+            <mat-form-field [style.width.px]=100 appearance="fill" >
+              <mat-label>Currency</mat-label>
+              <input matInput placeholder="Currency" [formControlName]="'currency'">
+            </mat-form-field>
+          </div>
 
 
           <span>
