@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <hr />
+    <div class="create-post-container col-md-9">
+      <form class="post-form" [formGroup]="createIncomeForm" (ngSubmit)="createIncome()">
+        <div class="form-group">
+          <div class="create-post-heading">Create Income</div>
+          <hr />
+
+          <mat-form-field [style.width.px]=500 appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Title" [formControlName]="'name'">
+          </mat-form-field>
+          <mat-form-field [style.width.px]=500 appearance="fill" style="margin-top: 5px">
+            <mat-label>Tags</mat-label>
+            <mat-select multiple [formControlName]="'tags'" >
+              <mat-option *ngFor="let tag of tagsList" [value]="tag">
+                {{tag.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxLayout="row">
+            <mat-form-field [style.width.px]=400 appearance="fill" >
+              <mat-label>amount</mat-label>
+              <input matInput placeholder="Amount" [formControlName]="'amount'">
+            </mat-form-field>
+            <mat-form-field [style.width.px]=100 appearance="fill" >
+              <mat-label>Currency</mat-label>
+              <input matInput placeholder="Currency" [formControlName]="'currency'">
+            </mat-form-field>
+          </div>
+
+          <span>
+              <div style="margin-top: 5px" class="float-right">
+                <button (click)="discardIncome()" class="btn btn-outline-secondary">Discard</button>
+                <button class="btn btn-primary">Create</button>
+              </div>
+            </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

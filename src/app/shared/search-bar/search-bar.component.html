@@ -1,0 +1,22 @@
+<mat-form-field class="example-form-field">
+  <mat-label>Min Value</mat-label>
+  <input matInput type="number" [(ngModel)]="min">
+
+</mat-form-field>
+<mat-form-field class="example-form-field">
+  <mat-label>Max Value</mat-label>
+  <input matInput type="number" [(ngModel)]="max">
+
+</mat-form-field>
+
+
+<button
+(click)="emitJSON()"
+>
+  Filter
+</button>
+<button
+  (click)="emitReset()"
+>
+  Reset
+</button>
