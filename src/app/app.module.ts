@@ -35,6 +35,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     UpdateIncomeComponent,
     CreateTagComponent,
     UpdateTagComponent,
-    NgModalConfirm
+    NgModalConfirm,
+    SearchBarComponent
   ],
     imports: [
         BrowserModule,

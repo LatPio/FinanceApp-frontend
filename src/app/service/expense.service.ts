@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ExpenseModel} from "./models/expense-model";
 import {ExpenseRequestPayload} from "../expenses/create-expense/expense.request.payload";
@@ -12,8 +12,17 @@ export class ExpenseService {
   constructor(private http: HttpClient) { }
   private baseURL = `http://localhost:8080/api/expenses`
 
+  httpHeaders = new HttpHeaders({
+    'Content-Type' : 'application/json'
+  });
+
+
   getAllExpenses():Observable<Array<ExpenseModel>>{
     return this.http.get<Array<ExpenseModel>>(`${this.baseURL}/list`);
+
+  }
+  getAllExpensesWithSpec(body:any):Observable<Array<ExpenseModel>>{
+    return this.http.post<Array<ExpenseModel>>(`${this.baseURL}/list`, body,{headers:this.httpHeaders});
 
   }
 

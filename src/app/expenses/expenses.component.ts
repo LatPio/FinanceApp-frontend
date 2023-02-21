@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, Type, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, Type, ViewChild} from '@angular/core';
 import {ExpenseModel} from "../service/models/expense-model";
 import {ExpenseService} from "../service/expense.service";
 import {NgbModal, NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
@@ -20,19 +20,22 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
 
   displayedColumns: string[] = ['id', 'name', 'amount', 'currency', 'tags', 'option'];
   dataSource = new MatTableDataSource<ExpenseModel>();
+  jsonArray:any=[];
+  data = JSON.stringify(this.jsonArray)
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private expenseService: ExpenseService,
               private router:Router,
               private modalService : NgbModal,
               private toastr: ToastrService) {
-
   }
 
   ngAfterViewInit(): void {
-    this.getAllExpenses();
+    this.getAllExpensesWithSpec();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = (data, filter) => {
@@ -42,12 +45,17 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.getAllExpenses();
+    // this.getAllExpenses();
         }
 
 
   getAllExpenses(){
     this.expenseService.getAllExpenses().subscribe(expense => {
+      this.dataSource.data = expense;
+    });
+  }
+  getAllExpensesWithSpec(){
+    this.expenseService.getAllExpensesWithSpec(JSON.stringify(this.jsonArray)).subscribe(expense => {
       this.dataSource.data = expense;
     });
   }
@@ -82,8 +90,23 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
       .subscribe(
         (data: any) => {
           this.toastr.success("Expense Entry Deleted");
-          this.getAllExpenses();
+          this.getAllExpensesWithSpec();
         }
       )
+  }
+
+  addFilterData(newItem: any) {
+    this.jsonArray = newItem;
+
+    this.getAllExpensesWithSpec();
+
+    console.log(this.jsonArray);
+    console.log(this.dataSource.data)
+  }
+
+  resetSearch($event: any) {
+    this.jsonArray=[];
+    this.getAllExpensesWithSpec();
+
   }
 }
