@@ -18,7 +18,7 @@ const MODALS: {[name: string]: Type<any>} = { deleteModal: NgModalConfirm,};
 })
 export class ExpensesComponent implements OnInit, AfterViewInit{
 
-  displayedColumns: string[] = ['id', 'name', 'amount', 'currency', 'tags', 'option'];
+  displayedColumns: string[] = ['id','date', 'name', 'amount', 'currency', 'tags', 'option'];
   dataSource = new MatTableDataSource<ExpenseModel>();
   jsonArray:any=[];
   data = JSON.stringify(this.jsonArray)

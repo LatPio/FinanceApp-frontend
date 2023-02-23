@@ -29,6 +29,7 @@ export class CreateExpenseComponent implements OnInit{
     this.expensePayload = {
       name: '',
       currency: '',
+      date: 0,
       tags: [],
       amount: 0
     }
@@ -38,6 +39,7 @@ export class CreateExpenseComponent implements OnInit{
     this.createExpenseForm = new FormGroup({
       name: new FormControl('', Validators.required),
       currency: new FormControl('', Validators.required),
+      date: new FormControl(new Date() , Validators.required),
       tags: new FormControl([], Validators.required),
       amount: new FormControl('', Validators.required)
     });
@@ -49,6 +51,7 @@ export class CreateExpenseComponent implements OnInit{
   createExpense(){
     this.expensePayload.name = this.createExpenseForm.get('name')?.value;
     this.expensePayload.currency = this.createExpenseForm.get('currency')?.value;
+    this.expensePayload.date = this.createExpenseForm.get('date')?.value;
     this.expensePayload.tags = this.createExpenseForm.get('tags')?.value;
     this.expensePayload.amount = this.createExpenseForm.get('amount')?.value;
 

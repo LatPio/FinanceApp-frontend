@@ -36,6 +36,12 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,30 +62,33 @@ import { SearchBarComponent } from './shared/search-bar/search-bar.component';
     UpdateTagComponent,
     NgModalConfirm,
     SearchBarComponent
+
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        NgxWebstorageModule.forRoot(),
-        BrowserAnimationsModule,
-        ToastrModule.forRoot(),
-        MatTableModule,
-        NgbModule,
-        FormsModule,
-        MatChipsModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatSelectModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatProgressSpinnerModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxWebstorageModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    MatTableModule,
+    NgbModule,
+    FormsModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
 
-
-    ],
+  ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

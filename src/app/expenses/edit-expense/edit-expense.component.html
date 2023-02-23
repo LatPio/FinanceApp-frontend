@@ -1,23 +1,16 @@
 <div class="container">
-  <div class="row">
+  <div class="row d-flex justify-content-center">
     <hr />
-    <div class="create-post-container col-md-9">
+    <div class=" col-md-9">
       <form class="post-form" [formGroup]="expenseForm" (ngSubmit)="updateExpense()">
         <div class="form-group">
           <div class="create-post-heading">Update Expense</div>
           <hr />
-<!--          <input type="text" formControlName="name" class="form-control" style="margin-top: 5px"-->
-<!--                 placeholder="Title">-->
-<!--          <input type="text" formControlName="currency" class="form-control" style="margin-top: 5px"-->
-<!--                 placeholder="currency">-->
-
-<!--          <input type="number" class="form-control" formControlName="amount" style="margin-top: 5px" placeholder="amount">-->
-
-          <mat-form-field [style.width.px]=500 appearance="fill">
+          <mat-form-field [style.width.%]=100 appearance="fill">
             <mat-label>Name</mat-label>
             <input matInput placeholder="Title" [formControlName]="'name'">
           </mat-form-field>
-          <mat-form-field [style.width.px]=500 appearance="fill" style="margin-top: 5px">
+          <mat-form-field [style.width.%]=100 appearance="fill" style="margin-top: 5px">
             <mat-label>Tags</mat-label>
             <mat-select multiple [formControlName]="'tags'" [compareWith]="compare">
               <mat-option *ngFor="let tag of tagsList" [value]="tag">
@@ -26,24 +19,38 @@
             </mat-select>
           </mat-form-field>
           <div fxLayout="row">
-            <mat-form-field [style.width.px]=400 appearance="fill" >
+            <mat-form-field [style.width.%]=50 appearance="fill" >
               <mat-label>amount</mat-label>
-              <input matInput placeholder="Amount" [formControlName]="'amount'">
+              <input
+
+                matInput type="number" class="text-end" placeholder="0.00" step='0.01' [formControlName]="'amount'"
+                >
             </mat-form-field>
-            <mat-form-field [style.width.px]=100 appearance="fill" >
+            <mat-form-field [style.width.%]=20 appearance="fill" >
               <mat-label>Currency</mat-label>
               <input matInput placeholder="Currency" [formControlName]="'currency'">
             </mat-form-field>
+            <mat-form-field appearance="fill" [style.width.%]=30 style="padding-left: 10px">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" [formControlName]="'date'">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
 
-
-          <span>
-              <div style="margin-top: 5px" class="float-right">
-                <button (click)="discardExpense()" class="btn">Discard</button>
-                <button class="btn btn-primary">Update</button>
+          <span class="d-flex justify-content-end">
+              <div class="row " style="margin: 10px">
+                <div class="col">
+                  <button (click)="discardExpense()" mat-raised-button color="warn" >Discard</button>
+                </div>
+                <div class="col">
+                  <button mat-raised-button color="primary">Update</button>
+                </div>
               </div>
             </span>
         </div>
+
       </form>
     </div>
   </div>

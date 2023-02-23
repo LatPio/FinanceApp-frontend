@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {TagsService} from "../../service/tags.service";
+import {TagModel} from "../../service/models/tag-model";
 
 
 @Component({
@@ -13,21 +15,27 @@ export class SearchBarComponent implements OnInit{
   @Output() onEmitJSON: EventEmitter<any> = new EventEmitter()
   @Output() onEmitReset: EventEmitter<any> = new EventEmitter()
 
-  // searchCriteria: SearchCriteria;
   min: number;
   max: number;
-
+  dateStart: Date;
+  dateEnd: Date;
   jsonArray: any =[];
-  jsonArrayTest = {
-    "key": "amount",
-    "value": "10000000",
-    "operation": "LESS_THAN"
-  };
+  hiddeOptions: boolean = true;
+  tagsList: Array<TagModel> = [];
+  providedTagList: Array<TagModel> = [];
 
-  ngOnInit(): void {
 
+  constructor(private tagsService: TagsService) {
   }
-  testBeforeEmit(){
+  ngOnInit(): void {
+    this.getAllTags();
+  }
+
+  private getAllTags() {
+    this.tagsService.getAllTags().subscribe(tag => this.tagsList = tag)
+  }
+
+  generateBeforeEmit(){
     if (this.min != null) {
       let searchCriteria: SearchCriteria = {
         key: 'amount',
@@ -44,17 +52,52 @@ export class SearchBarComponent implements OnInit{
       }
       this.jsonArray.push(searchCriteria)
     }
+    if (this.dateStart != null) {
+      let searchCriteria: SearchCriteria = {
+        key: 'date',
+        value: new Date(this.dateStart).toISOString(),
+        // value: this.dateStart,
+        operation: 'DATE_GREATER_THAN_EQUAL'
+      }
+      this.jsonArray.push(searchCriteria)
+    }
+    if (this.dateEnd != null) {
+      let searchCriteria: SearchCriteria = {
+        key: 'date',
+        value: new Date(this.dateEnd).toISOString(),
+        // value: this.dateEnd,
+        operation: 'DATE_LESS_THAN_EQUAL'
+
+      }
+      console.log(this.dateStart)
+      this.jsonArray.push(searchCriteria)
+    }
+    if (this.providedTagList != null) {
+      this.providedTagList.forEach(value => {
+        let searchCriteria: SearchCriteria = {
+          key: 'tags',
+          value: value.id,
+          operation: 'TAG_OBJECT'
+        }
+        this.jsonArray.push(searchCriteria)
+      })
+
+    }
   }
   emitJSON(){
-
-    this.testBeforeEmit();
+    this.jsonArray = []
+    this.generateBeforeEmit();
     this.onEmitJSON.emit(this.jsonArray)
+    console.log(this.providedTagList)
   }
-
 
   emitReset() {
     this.jsonArray = []
     this.onEmitReset.emit()
+  }
+
+  menuShow() {
+    this.hiddeOptions = !this.hiddeOptions
   }
 }
 export interface SearchCriteria{

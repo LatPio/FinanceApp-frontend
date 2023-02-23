@@ -4,5 +4,6 @@ export interface ExpenseRequestPayload{
   amount: number;
   currency: String;
   name: String;
+  date: number;
   tags: TagModel[];
 }

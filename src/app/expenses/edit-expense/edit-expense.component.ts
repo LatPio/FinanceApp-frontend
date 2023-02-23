@@ -7,6 +7,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {first} from "rxjs";
 import {TagModel} from "../../service/models/tag-model";
 import {TagsService} from "../../service/tags.service";
+import {registerLocaleData} from "@angular/common";
+import pl from '@angular/common/locales/pl';
 
 @Component({
   selector: 'app-edit-expense',
@@ -19,7 +21,6 @@ export class EditExpenseComponent implements OnInit{
   expenseId: string;
   expenseModel: ExpenseModel = new ExpenseModel();
   tagsList: Array<TagModel> = []
-
 
   constructor(private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -34,11 +35,12 @@ export class EditExpenseComponent implements OnInit{
     this.expenseModel.id = this.route.snapshot.params['expenseID'];
     this.expenseId = this.route.snapshot.params['expenseID'];
     this.getAllTags();
-
+    registerLocaleData( pl )
     this.expenseForm = this.formBuilder.group(
       {
         name: ['', Validators.required],
         currency: ['', Validators.required],
+        date: [0, Validators.required],
         tags: [[], Validators.required],
         amount: ['', Validators.required]
       }
@@ -52,16 +54,30 @@ export class EditExpenseComponent implements OnInit{
   compare(val1:any, val2:any): boolean{
     return val1.id === val2.id;
   };
+
   private getExpenseById() {
     this.expenseService.getExpense(this.expenseId)
-      .pipe(first())
-      .subscribe(x => this.expenseForm.patchValue(x) )
+      .subscribe(
+        data=>{
+          console.log(data.date)
+          this.expenseForm = this.formBuilder.group({
+            name:[data.name],
+            tags:[data.tags],
+            currency:[data.currency],
+            amount:[data.amount],
+            date:[new Date(data.date)]
+
+          })
+        }
+      )
+
   }
 
   updateExpense(){
     this.expenseModel.name = this.expenseForm.get('name')?.value;
     this.expenseModel.currency = this.expenseForm.get('currency')?.value;
     this.expenseModel.tags = this.expenseForm.get('tags')?.value;
+    this.expenseModel.date = this.expenseForm.get('date')?.value;
     this.expenseModel.amount = this.expenseForm.get('amount')?.value;
 
     this.expenseService.updateExpense(this.expenseModel).subscribe({

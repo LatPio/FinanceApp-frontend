@@ -6,6 +6,7 @@ export class ExpenseModel{
   name: string;
   amount: number;
   currency: string;
+  date: number;
   tags: TagModel[];
   // user: number;
 
