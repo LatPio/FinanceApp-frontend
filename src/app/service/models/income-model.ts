@@ -8,6 +8,6 @@ export class IncomeModel{
   currency: string;
   name: string;
   tags: TagModel[];
-  // user: number;
+  date: number;
 
 }

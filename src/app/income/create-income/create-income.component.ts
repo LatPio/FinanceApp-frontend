@@ -27,6 +27,7 @@ export class CreateIncomeComponent implements  OnInit{
     this.incomePayload = {
       name:'',
       currency: '',
+      date: 0,
       tags:[],
       amount: 0
     }
@@ -37,6 +38,7 @@ export class CreateIncomeComponent implements  OnInit{
     this.createIncomeForm = new FormGroup<any>({
       name: new FormControl('', Validators.required),
       currency: new FormControl('', Validators.required),
+      date: new FormControl(new Date() , Validators.required),
       tags: new FormControl([this.tagsList], Validators.required),
       amount: new FormControl('',Validators.required)
     });
@@ -48,6 +50,7 @@ export class CreateIncomeComponent implements  OnInit{
   createIncome(){
     this.incomePayload.name = this.createIncomeForm.get('name')?.value;
     this.incomePayload.currency = this.createIncomeForm.get('currency')?.value;
+    this.incomePayload.date = this.createIncomeForm.get('date')?.value;
     this.incomePayload.amount = this.createIncomeForm.get('amount')?.value;
     this.incomePayload.tags = this.createIncomeForm.get('tags')?.value;
 

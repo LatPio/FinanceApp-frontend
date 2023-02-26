@@ -7,6 +7,8 @@ import {IncomeService} from "../../service/income.service";
 import {first} from "rxjs";
 import {TagModel} from "../../service/models/tag-model";
 import {TagsService} from "../../service/tags.service";
+import {registerLocaleData} from "@angular/common";
+import pl from "@angular/common/locales/pl";
 
 @Component({
   selector: 'app-update-income',
@@ -33,10 +35,12 @@ export class UpdateIncomeComponent implements OnInit{
     this.incomeModel.id = this.route.snapshot.params['incomeID'];
     this.incomeId = this.route.snapshot.params['incomeID'];
     this.getAllTags();
+    registerLocaleData( pl )
 
     this.incomeForm = this.formBuilder.group({
       name:['', Validators.required],
       currency: ['', Validators.required],
+      date: [new Date(), Validators.required],
       tags: [[], Validators.required],
       amount: ['', Validators.required]
     })
@@ -45,23 +49,22 @@ export class UpdateIncomeComponent implements OnInit{
   private getAllTags() {
     this.tagsService.getAllTags().subscribe(tag => this.tagsList = tag)
   }
-  // private getIncomeById() {
-  //   this.incomeService.getIncome(this.incomeId)
-  //     .pipe(first())
-  //     .subscribe(x=> this.incomeForm.patchValue(x))
-  // }
+
 
   compare(val1:any, val2:any): boolean{
     return val1.id === val2.id;
   };
 
   private getIncomeById() {
-    this.incomeService.getIncome(this.incomeId).subscribe(data=>{
+    this.incomeService.getIncome(this.incomeId)
+      .subscribe(
+        data=>{
       this.incomeForm = this.formBuilder.group({
         name:[data.name],
         currency:[data.currency],
         tags: [data.tags],
-        amount: [data.amount]
+        amount: [data.amount],
+        date:[new Date(data.date)]
       })
     })
   }
@@ -70,6 +73,7 @@ export class UpdateIncomeComponent implements OnInit{
     this.incomeModel.name = this.incomeForm.get('name')?.value;
     this.incomeModel.currency = this.incomeForm.get('currency')?.value;
     this.incomeModel.tags = this.incomeForm.get('tags')?.value;
+    this.incomeModel.date = this.incomeForm.get('date')?.value;
     this.incomeModel.amount = this.incomeForm.get('amount')?.value;
 
     this.incomeService.updateIncome(this.incomeModel).subscribe({

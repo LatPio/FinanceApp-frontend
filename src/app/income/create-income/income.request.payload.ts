@@ -4,5 +4,6 @@ export interface IncomeRequestPayload{
   amount: number;
   currency: String;
   name: String;
+  date: number;
   tags: TagModel[];
 }

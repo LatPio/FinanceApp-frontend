@@ -15,7 +15,7 @@ export class SearchBarComponent implements OnInit{
   @Output() onEmitJSON: EventEmitter<any> = new EventEmitter()
   @Output() onEmitReset: EventEmitter<any> = new EventEmitter()
 
-  min: number = 22;
+  min: number;
   max: number;
   dateStart: Date;
   dateEnd: Date;

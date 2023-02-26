@@ -59,7 +59,6 @@ export class EditExpenseComponent implements OnInit{
     this.expenseService.getExpense(this.expenseId)
       .subscribe(
         data=>{
-          console.log(data.date)
           this.expenseForm = this.formBuilder.group({
             name:[data.name],
             tags:[data.tags],

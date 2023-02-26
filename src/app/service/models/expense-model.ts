@@ -8,6 +8,5 @@ export class ExpenseModel{
   currency: string;
   date: number;
   tags: TagModel[];
-  // user: number;
 
 }

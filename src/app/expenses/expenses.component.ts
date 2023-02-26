@@ -45,7 +45,6 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-    // this.getAllExpenses();
         }
 
 
