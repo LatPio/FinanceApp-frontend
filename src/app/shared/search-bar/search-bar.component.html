@@ -1,17 +1,33 @@
-<div class="d-flex flex-row-reverse align-items-center" style="padding-top: 10px"  >
-
-  <button
-    mat-mini-fab
-    color="primary"
-    aria-label="menu button"
-    (click)="menuShow()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <div style="padding-right: 20px ">
-    {{hiddeOptions? 'Provide Criteria':'Filter Options'}}
+<div class="row" style="padding-top: 10px">
+  <div class="col-10 d-flex flex-row align-items-center">
+    <div *ngFor="let filter of jsonArray" style="padding-right: 10px">
+      <div *ngIf="filter.key === 'amount'"  >
+        <span *ngIf="filter.operation === 'GREATER_THAN_EQUAL'"> Min Amount: {{filter.value}}; </span>
+        <span *ngIf="filter.operation === 'LESS_THAN'"> Max Amount: {{filter.value}};</span>
+      </div>
+      <div *ngIf="filter.key === 'date'"  >
+        <span *ngIf="filter.operation === 'DATE_GREATER_THAN_EQUAL'"> From Date: {{filter.value | date}};</span>
+        <span *ngIf="filter.operation === 'DATE_LESS_THAN_EQUAL'"> To Date: {{filter.value | date}};</span>
+      </div>
+      <div *ngIf="filter.key === 'tags'"  >
+        <span *ngFor="let tag of providedTagList">
+          <span>Tag: {{tag.name}};</span>
+        </span>
+      </div>
+    </div>
   </div>
-
-
+  <div class="col-2 d-flex flex-row-reverse align-items-center">
+    <button
+      mat-mini-fab
+      color="primary"
+      aria-label="menu button"
+      (click)="menuShow()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div style="padding-right: 20px ">
+      {{hiddeOptions? 'Provide Criteria':'Filter Options'}}
+    </div>
+  </div>
 </div>
 
 <div *ngIf="hiddeOptions" class="d-flex justify-content-center align-items-center" >
@@ -46,8 +62,6 @@
     <mat-hint>Provide Tags</mat-hint>
   </mat-form-field>
 </div>
-
-
 
 <div style="padding: 10px">
   <button mat-mini-fab color="primary" aria-label="Example icon button with a filter list icon" (click)="emitJSON()">

@@ -35,10 +35,11 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { SearchBarComponent } from './shared/search-bar/search-bar.component';
+import {SearchBarComponent } from './shared/search-bar/search-bar.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+
 
 
 
@@ -85,7 +86,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatProgressSpinnerModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+
 
 
   ],

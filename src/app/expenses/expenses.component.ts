@@ -7,7 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {NgModalConfirm} from "../shared/NgModalConfiirm";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, MatSortable} from "@angular/material/sort";
 
 const MODALS: {[name: string]: Type<any>} = { deleteModal: NgModalConfirm,};
 

@@ -15,15 +15,14 @@ export class SearchBarComponent implements OnInit{
   @Output() onEmitJSON: EventEmitter<any> = new EventEmitter()
   @Output() onEmitReset: EventEmitter<any> = new EventEmitter()
 
-  min: number;
+  min: number = 22;
   max: number;
   dateStart: Date;
   dateEnd: Date;
   jsonArray: any =[];
-  hiddeOptions: boolean = true;
+  hiddeOptions: boolean = false;
   tagsList: Array<TagModel> = [];
   providedTagList: Array<TagModel> = [];
-
 
   constructor(private tagsService: TagsService) {
   }
@@ -56,7 +55,6 @@ export class SearchBarComponent implements OnInit{
       let searchCriteria: SearchCriteria = {
         key: 'date',
         value: new Date(this.dateStart).toISOString(),
-        // value: this.dateStart,
         operation: 'DATE_GREATER_THAN_EQUAL'
       }
       this.jsonArray.push(searchCriteria)
@@ -65,7 +63,6 @@ export class SearchBarComponent implements OnInit{
       let searchCriteria: SearchCriteria = {
         key: 'date',
         value: new Date(this.dateEnd).toISOString(),
-        // value: this.dateEnd,
         operation: 'DATE_LESS_THAN_EQUAL'
 
       }
@@ -93,12 +90,15 @@ export class SearchBarComponent implements OnInit{
 
   emitReset() {
     this.jsonArray = []
+    this.providedTagList = []
     this.onEmitReset.emit()
   }
 
   menuShow() {
     this.hiddeOptions = !this.hiddeOptions
+    console.log(this.tagsList)
   }
+
 }
 export interface SearchCriteria{
   key: String;

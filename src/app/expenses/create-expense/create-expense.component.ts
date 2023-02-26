@@ -71,4 +71,29 @@ export class CreateExpenseComponent implements OnInit{
   discardExpense(){
     this.router.navigateByUrl('expenses')
   }
+
+
+// <ng-container matColumnDef="tags" >
+//     <th mat-header-cell *matHeaderCellDef> Tag </th>
+//     <td mat-cell *matCellDef="let emp">
+// <mat-chip-listbox>
+// <mat-chip *ngFor="let tag of emp.tags" [hidden]>{{tag.name}}</mat-chip>
+// </mat-chip-listbox>
+// </td>
+// </ng-container>
+// <ng-container matColumnDef="option">
+//   <th mat-header-cell *matHeaderCellDef> Option </th>
+//   <td mat-cell *matCellDef="let emp">
+// <a [routerLink]="['/edit/expenses/', emp.id]" class="btn">
+// <svg class="bi me-2" width="20" height="20" fill="navy" >
+//   <use xlink:href="bootstrap-icons.svg#pencil-square"/></svg>
+// </a>
+// <a (click)="deleteExpenseConfirmation(emp)" class="btn">
+// <svg class="bi me-2" width="20"  height="20"fill="red" >
+//   <use xlink:href="bootstrap-icons.svg#trash3"/></svg>
+//   </a>
+//
+//   </td>
+//
+//   </ng-container>
 }
