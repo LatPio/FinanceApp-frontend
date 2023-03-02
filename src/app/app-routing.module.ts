@@ -14,12 +14,14 @@ import {CreateIncomeComponent} from "./income/create-income/create-income.compon
 import {UpdateIncomeComponent} from "./income/update-income/update-income.component";
 import {CreateTagComponent} from "./tags/create-tag/create-tag.component";
 import {UpdateTagComponent} from "./tags/update-tag/update-tag.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
 
   {path: 'sign-up', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: HomeComponent},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'user-profile', component: UserprofileComponent, canActivate: [AuthGuard]},
   {path: 'income', component: IncomeComponent, canActivate: [AuthGuard]},
   {path: 'add/income', component: CreateIncomeComponent, canActivate: [AuthGuard]},

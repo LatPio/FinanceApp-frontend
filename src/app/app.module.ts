@@ -39,6 +39,9 @@ import {SearchBarComponent } from './shared/search-bar/search-bar.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {MatCardModule} from "@angular/material/card";
+import {DatePipe} from "@angular/common";
 
 
 
@@ -62,7 +65,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     CreateTagComponent,
     UpdateTagComponent,
     NgModalConfirm,
-    SearchBarComponent
+    SearchBarComponent,
+    DashboardComponent
 
   ],
   imports: [
@@ -87,14 +91,15 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    MatCardModule,
 
 
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
-    multi: true
+    multi: true,
+
   }],
   bootstrap: [AppComponent]
 })

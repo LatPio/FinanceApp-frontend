@@ -1,0 +1,67 @@
+<div class="row align-items-center justify-content-center" style="padding-top: 20px">
+  <mat-card class="information-card mat-elevation-z5">
+    <mat-card-header>
+      <mat-card-title>
+      <h3>Income:</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h1>{{incomeSum}}</h1>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="information-card mat-elevation-z5">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Expenses:</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h1 *ngFor="let lab of test.keys()">{{lab}}</h1>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="information-card mat-elevation-z5">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Last Month Profit:</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h1>{{test.get('2022 - 03')}}</h1>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="information-card mat-elevation-z5">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>This Year Profit:</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h1 *ngFor="let lab of test.values()">{{lab}}</h1>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+<div class="row row-cols-2 align-items-center justify-content-center">
+    <mat-card class="mat-elevation-z5 chart-cart">
+      <mat-card-header>
+        <mat-card-title>
+          <h3>Actual month Incomes / Expenses:</h3>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h1>{{longText}}</h1>
+      </mat-card-content>
+    </mat-card>
+
+
+  <mat-card class="mat-elevation-z5 chart-cart">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Monthly Budget</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h1>{{longText}}</h1>
+    </mat-card-content>
+  </mat-card>
+</div>

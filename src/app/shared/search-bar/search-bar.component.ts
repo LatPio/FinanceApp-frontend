@@ -85,6 +85,7 @@ export class SearchBarComponent implements OnInit{
     this.jsonArray = []
     this.generateBeforeEmit();
     this.onEmitJSON.emit(this.jsonArray)
+
     console.log(this.providedTagList)
   }
 
