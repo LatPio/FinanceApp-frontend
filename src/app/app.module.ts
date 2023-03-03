@@ -42,6 +42,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {MatCardModule} from "@angular/material/card";
 import {DatePipe} from "@angular/common";
+import {MatMenuModule} from "@angular/material/menu";
 
 
 
@@ -69,32 +70,33 @@ import {DatePipe} from "@angular/common";
     DashboardComponent
 
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgxWebstorageModule.forRoot(),
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    MatTableModule,
-    NgbModule,
-    FormsModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatSelectModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgxWebstorageModule.forRoot(),
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        MatTableModule,
+        NgbModule,
+        FormsModule,
+        MatChipsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatSelectModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+        MatMenuModule,
 
 
-  ],
+    ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

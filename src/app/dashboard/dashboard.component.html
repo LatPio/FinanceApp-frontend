@@ -6,7 +6,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h1>{{incomeSum}}</h1>
+      <h1>{{incomeSum | number}}</h1>
     </mat-card-content>
   </mat-card>
   <mat-card class="information-card mat-elevation-z5">
@@ -16,7 +16,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h1 *ngFor="let lab of test.keys()">{{lab}}</h1>
+      <h1>{{expenseSum | number}}</h1>
     </mat-card-content>
   </mat-card>
   <mat-card class="information-card mat-elevation-z5">
@@ -26,7 +26,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h1>{{test.get('2022 - 03')}}</h1>
+      <h1></h1>
     </mat-card-content>
   </mat-card>
   <mat-card class="information-card mat-elevation-z5">
@@ -36,7 +36,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h1 *ngFor="let lab of test.values()">{{lab}}</h1>
+      <h1 >{{lastYearProfit | number}}</h1>
     </mat-card-content>
   </mat-card>
 
@@ -46,10 +46,13 @@
       <mat-card-header>
         <mat-card-title>
           <h3>Actual month Incomes / Expenses:</h3>
+
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <h1>{{longText}}</h1>
+        <div class="chart-container">
+          <canvas  id="MyChart" >{{ chartMonthlyIncomeExpense }}</canvas>
+        </div>
       </mat-card-content>
     </mat-card>
 
@@ -61,7 +64,11 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h1>{{longText}}</h1>
+      <div class="chart-container">
+        <canvas  id="MyChart1" >{{ this.chartMonth }}</canvas>
+      </div>
+
+
     </mat-card-content>
   </mat-card>
 </div>
