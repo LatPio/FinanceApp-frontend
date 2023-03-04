@@ -36,12 +36,17 @@ export class StatsService {
     return this.http.get(`${this.baseURL}/monthly_expense`, {params: parameters})
   }
 
-  getAmountsByTags(startDate: string, endDate: string): Observable<any>{
+  getAmountsByTagsByIncome(startDate: string, endDate: string): Observable<any>{
     let parameters = new HttpParams()
     parameters = parameters.append("startDate", startDate);
     parameters = parameters.append("endDate", endDate);
     return this.http.get(`${this.baseURL}/month_income_by_tags`, {params: parameters})
   }
 
-
+  getAmountsByTagsByExpense(startDate: string, endDate: string): Observable<any>{
+    let parameters = new HttpParams()
+    parameters = parameters.append("startDate", startDate);
+    parameters = parameters.append("endDate", endDate);
+    return this.http.get(`${this.baseURL}/month_expense_by_tags`, {params: parameters})
+  }
 }

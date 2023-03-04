@@ -1,4 +1,4 @@
-import {Component, OnInit, } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StatsService} from "../service/stats.service";
 
 

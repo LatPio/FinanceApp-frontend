@@ -33,7 +33,7 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
     this.labelsArray.length = 0;
     this.expenseArray.length = 0;
     this.incomesArray.length = 0;
-    // this.constructDataExpense(dateStart, endDate);
+    this.constructDataExpense(dateStart, endDate);
     this.constructDataIncome(dateStart, endDate);
     this.createChartIncomeExpense();
   }
@@ -44,7 +44,7 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
   }
 
   constructDataIncome(dateStart: SimpleChange, endDate: SimpleChange){
-    this.statsService.getAmountsByTags(dateStart.currentValue, endDate.currentValue).subscribe(value => {
+    this.statsService.getAmountsByTagsByIncome(dateStart.currentValue, endDate.currentValue).subscribe(value => {
         Object.entries(value).forEach(([k,v]) => {
           this.labelsArray.push(k);
           if (typeof v === "number") {
@@ -56,20 +56,20 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
     )
   }
 
-  // constructDataExpense(){
-  //   this.statsService.getAmountByMonthsExpense(number.currentValue).subscribe(value => {
-  //       Object.entries(value).forEach(([k,v]) => {
-  //
-  //         if (typeof v === "number") {
-  //           this.expenseArray.push(v);
-  //         }
-  //       })
-  //       this.chartMonthlyIncomeExpense.update();
-  //     }
-  //
-  //   )
-  //
-  // }
+  constructDataExpense(dateStart: SimpleChange, endDate: SimpleChange){
+    this.statsService.getAmountsByTagsByExpense(dateStart.currentValue, endDate.currentValue).subscribe(value => {
+        Object.entries(value).forEach(([k,v]) => {
+          // this.labelsArray.push(k);
+          if (typeof v === "number") {
+            this.expenseArray.push(v);
+          }
+        })
+        this.chartMonthlyIncomeExpense.update();
+      }
+    )
+  }
+
+
 
   createChartIncomeExpense(){
 
@@ -83,6 +83,11 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
             label: "Income",
             data: this.incomesArray,
             backgroundColor: 'blue'
+          },
+          {
+            label: "Expense",
+            data: this.expenseArray,
+            backgroundColor: 'red'
           },
 
         ]
