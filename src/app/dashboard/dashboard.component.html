@@ -2,7 +2,7 @@
   <mat-card class="information-card mat-elevation-z5">
     <mat-card-header>
       <mat-card-title>
-      <h3>Income:</h3>
+      <h3>This Year Income:</h3>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -12,7 +12,7 @@
   <mat-card class="information-card mat-elevation-z5">
     <mat-card-header>
       <mat-card-title>
-        <h3>Expenses:</h3>
+        <h3>This Year Expenses:</h3>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -26,7 +26,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <h1></h1>
+      <h1>{{lastMonthProfit | number}}</h1>
     </mat-card-content>
   </mat-card>
   <mat-card class="information-card mat-elevation-z5">
@@ -42,33 +42,72 @@
 
 </div>
 <div class="row row-cols-2 align-items-center justify-content-center">
-    <mat-card class="mat-elevation-z5 chart-cart">
-      <mat-card-header>
-        <mat-card-title>
-          <h3>Actual month Incomes / Expenses:</h3>
 
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="chart-container">
-          <canvas  id="MyChart" >{{ chartMonthlyIncomeExpense }}</canvas>
-        </div>
-      </mat-card-content>
-    </mat-card>
 
 
   <mat-card class="mat-elevation-z5 chart-cart">
-    <mat-card-header>
-      <mat-card-title>
-        <h3>Monthly Budget</h3>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="chart-container">
-        <canvas  id="MyChart1" >{{ this.chartMonth }}</canvas>
+
+      <div class="row" >
+        <div class="col-10" style="margin:10px">
+          <h2>Actual month Incomes / Expenses:</h2>
+        </div>
+        <div class="col justify-content-end align-items-end" style="margin-left:30px; margin-top: 10px">
+          <button mat-icon-button
+                  matTooltip="Select month to show"
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                  >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="changeNumberOfMonth(4)">
+              <span>4</span>
+            </button>
+            <button mat-menu-item (click)="changeNumberOfMonth(6)">
+              <span>6</span>
+            </button>
+            <button mat-menu-item (click)="changeNumberOfMonth(12)">
+              <span>12</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
 
+    <mat-card-content>
+      <app-monthly-chart [showLastMonths]="showLastMonths"></app-monthly-chart>
 
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z5 chart-cart">
+    <div class="row" >
+      <div class="col-10" style="margin:10px">
+        <h2>Monthly Budget:</h2>
+      </div>
+      <div class="col justify-content-end align-items-end" style="margin-left:30px; margin-top: 10px">
+<!--        <button mat-icon-button-->
+<!--                matTooltip="Select month to show"-->
+<!--                [matMenuTriggerFor]="menu"-->
+<!--                aria-label="Example icon-button with a menu"-->
+<!--        >-->
+<!--          <mat-icon>more_vert</mat-icon>-->
+<!--        </button>-->
+<!--        <mat-menu #menu="matMenu">-->
+<!--          <button mat-menu-item (click)="changeNumberOfMonth(4)">-->
+<!--            <span>4</span>-->
+<!--          </button>-->
+<!--          <button mat-menu-item (click)="changeNumberOfMonth(6)">-->
+<!--            <span>6</span>-->
+<!--          </button>-->
+<!--          <button mat-menu-item (click)="changeNumberOfMonth(12)">-->
+<!--            <span>12</span>-->
+<!--          </button>-->
+<!--        </mat-menu>-->
+
+      </div>
+    </div>
+    <mat-card-content>
+      <app-last-month-chart [startDateMonth] = "startDateMonth" [endDateMonth]="endDateMonth"></app-last-month-chart>
     </mat-card-content>
   </mat-card>
 </div>

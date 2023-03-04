@@ -1,6 +1,6 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit, } from '@angular/core';
 import {StatsService} from "../service/stats.service";
-import Chart from 'chart.js/auto';
+
 
 
 @Component({
@@ -8,14 +8,16 @@ import Chart from 'chart.js/auto';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class DashboardComponent implements OnInit {
 
   showLastMonths: number = 12;
   incomeSum: number;
   expenseSum: number;
   lastYearProfit: number;
-  startDate: string;
-  endDate:string;
+  startDateYear: string;
+  endDateYear:string;
+  startDateMonth: string;
+  endDateMonth:string;
   labelsArray: string[] = [];
   incomesArray: number[] = [];
   expenseArray: number[] = [];
@@ -23,32 +25,33 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentIn
   expensesMap: any = new Map<string, number>;
   public chartMonthlyIncomeExpense: any;
   public chartMonth: any;
+  lastMonthProfit: any;
 
   constructor(private statsService: StatsService) {
-
   }
 
   ngOnInit(): void {
     this.actualYearDate();
-    this.geAmounts(this.startDate, this.endDate);
-    // this.getSumExpenseAmount(this.startDate, this.endDate);
+    this.lastMonthDate(1)
+    this.getAmountsYear(this.startDateYear, this.endDateYear);
+    this.getAmountsMonth(this.startDateMonth, this.endDateMonth);
     this.constructDataIncome(this.showLastMonths);
     this.constructDataExpense(this.showLastMonths);
   }
-  ngAfterViewInit(): void {
-    this.createChartIncomeExpense();
-    this.createChartIncomeExpenseMonthly()
-  }
 
-  ngAfterContentInit(): void {
-  }
 
   actualYearDate(){
-    this.startDate = new Date(new Date().getFullYear(), 0, 1).toISOString()
-    this.endDate = new Date(new Date().getFullYear(), 11, 32).toISOString()
+    this.startDateYear = new Date(new Date().getFullYear(), 0, 1).toISOString()
+    this.endDateYear = new Date(new Date().getFullYear(), 11, 32).toISOString()
+  }
+  lastMonthDate(minusMonths: number){
+    this.startDateMonth = new Date(new Date().getFullYear(), new Date().getMonth()-minusMonths, 1).toISOString()
+    this.endDateMonth = new Date(new Date().getFullYear(), new Date().getMonth()-minusMonths, 32).toISOString()
+
+
   }
 
-  geAmounts(startDate: string, endDate: string){
+  getAmountsYear(startDate: string, endDate: string){
     this.statsService.getAmountIncome(startDate, endDate).subscribe(
       value => {
         this.incomeSum = value;
@@ -59,12 +62,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentIn
       value => {this.expenseSum = value
       this.lastYearProfit = this.lastYearProfit - value}
     )
-
   }
 
+  getAmountsMonth(startDate: string, endDate: string){
+    this.statsService.getAmountIncome(startDate, endDate).subscribe(
+      value => {
+        this.lastMonthProfit = value;
+      }
+    );
+    this.statsService.getAmountExpense(startDate, endDate).subscribe(
+      value => {
+        this.lastMonthProfit = this.lastMonthProfit - value;
+      }
+    )
+  }
 
-
-    constructDataIncome(number: number){
+  constructDataIncome(number: number){
       this.statsService.getAmountByMonthsIncome(number).subscribe(value => {
         this.incomesMap = new Map<string, number>(Object.entries((value)))
         Object.entries(value).forEach(([k,v]) => {
@@ -75,8 +88,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentIn
         })
         this.chartMonthlyIncomeExpense.update();
       }
-    )
-  }
+      )
+    }
   constructDataExpense(number: number){
     this.statsService.getAmountByMonthsExpense(number).subscribe(value => {
         this.expensesMap = new Map<string, number>(Object.entries((value)))
@@ -93,62 +106,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentIn
 
   }
 
-
-  createChartIncomeExpense(){
-
-    this.chartMonthlyIncomeExpense = new Chart("MyChart", {
-      type: 'bar',
-
-      data: {
-        labels: this.labelsArray,
-        datasets: [
-          {
-            label: "Income",
-            data: this.incomesArray,
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Expense",
-            data: this.expenseArray,
-            backgroundColor: 'red'
-          },
-
-        ]
-      },
-      options: {
-        aspectRatio:2.5
-      }
-
-    });
-  }
-  createChartIncomeExpenseMonthly(){
-
-    this.chartMonth = new Chart("MyChart1", {
-      type: 'bar',
-
-      data: {
-        labels: this.labelsArray,
-        datasets: [
-          {
-            label: "Income",
-            data: this.incomesArray,
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Expense",
-            data: this.expenseArray,
-            backgroundColor: 'red'
-          },
-
-        ]
-      },
-      options: {
-        aspectRatio:2.5
-      }
-
-    });
-  }
-
   subtractMonths(date: Date, months: number){
     const dateCopy = new Date(date);
     dateCopy.setMonth(dateCopy.getMonth()-months);
@@ -156,5 +113,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, AfterContentIn
   }
 
 
-
+  changeNumberOfMonth(numbProvided: number) {
+    this.showLastMonths = numbProvided;
+  }
 }

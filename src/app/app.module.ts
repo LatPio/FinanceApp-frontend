@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { HomeComponent } from './home/home.component';
 import {TokenInterceptor} from "./token-interceptor";
-import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatTableModule} from "@angular/material/table";
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { IncomeComponent } from './income/income.component';
@@ -41,8 +41,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {MatCardModule} from "@angular/material/card";
-import {DatePipe} from "@angular/common";
 import {MatMenuModule} from "@angular/material/menu";
+import { MonthlyChartComponent } from './dashboard/monthly-chart/monthly-chart.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { LastMonthChartComponent } from './dashboard/last-month-chart/last-month-chart.component';
 
 
 
@@ -67,36 +69,39 @@ import {MatMenuModule} from "@angular/material/menu";
     UpdateTagComponent,
     NgModalConfirm,
     SearchBarComponent,
-    DashboardComponent
+    DashboardComponent,
+    MonthlyChartComponent,
+    LastMonthChartComponent
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        NgxWebstorageModule.forRoot(),
-        BrowserAnimationsModule,
-        ToastrModule.forRoot(),
-        MatTableModule,
-        NgbModule,
-        FormsModule,
-        MatChipsModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatSelectModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatProgressSpinnerModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCardModule,
-        MatMenuModule,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxWebstorageModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    MatTableModule,
+    NgbModule,
+    FormsModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCardModule,
+    MatMenuModule,
+    MatTooltipModule,
 
 
-    ],
+  ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
