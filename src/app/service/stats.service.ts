@@ -49,4 +49,12 @@ export class StatsService {
     parameters = parameters.append("endDate", endDate);
     return this.http.get(`${this.baseURL}/month_expense_by_tags`, {params: parameters})
   }
+
+  getFirstEntryDate():Observable<any>{
+    return this.http.get(`${this.baseURL}/firstEntryDate`)
+  }
+
+  getYears():Observable<any>{
+    return this.http.get(`${this.baseURL}/listOfYears`)
+  }
 }

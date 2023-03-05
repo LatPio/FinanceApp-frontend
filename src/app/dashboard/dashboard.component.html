@@ -85,27 +85,19 @@
         <h2>Monthly Budget:</h2>
       </div>
       <div class="col justify-content-end align-items-end" style="margin-left:30px; margin-top: 10px">
-<!--        <button mat-icon-button-->
-<!--                matTooltip="Select month to show"-->
-<!--                [matMenuTriggerFor]="menu"-->
-<!--                aria-label="Example icon-button with a menu"-->
-<!--        >-->
-<!--          <mat-icon>more_vert</mat-icon>-->
-<!--        </button>-->
-<!--        <mat-menu #menu="matMenu">-->
-<!--          <button mat-menu-item (click)="changeNumberOfMonth(4)">-->
-<!--            <span>4</span>-->
-<!--          </button>-->
-<!--          <button mat-menu-item (click)="changeNumberOfMonth(6)">-->
-<!--            <span>6</span>-->
-<!--          </button>-->
-<!--          <button mat-menu-item (click)="changeNumberOfMonth(12)">-->
-<!--            <span>12</span>-->
-<!--          </button>-->
-<!--        </mat-menu>-->
+        <button mat-icon-button
+                matTooltip="Select month to show"
+                [matMenuTriggerFor]="menu1"
+                aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu1="matMenu">
+          <button *ngFor="let month of months" mat-menu-item (click)="generateDate(2023,month)">
+            <span>{{month}}</span>
+          </button>
 
-
-
+        </mat-menu>
 
 
       </div>

@@ -38,10 +38,10 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
     this.createChartIncomeExpense();
   }
 
-  lastMonthDate() {
-    this.startDateMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toISOString()
-    this.endDateMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 32).toISOString()
-  }
+  // lastMonthDate() {
+  //   this.startDateMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toISOString()
+  //   this.endDateMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 32).toISOString()
+  // }
 
   constructDataIncome(dateStart: SimpleChange, endDate: SimpleChange){
     this.statsService.getAmountsByTagsByIncome(dateStart.currentValue, endDate.currentValue).subscribe(value => {
