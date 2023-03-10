@@ -1,10 +1,16 @@
+.function-card{
+  max-width: 10%;
+  margin: 10px;
+  height: 110px;
+
+}
 .information-card{
   max-width: 20%;
-  margin: 20px;
-
+  margin: 10px;
+  height: 110px;
 }
 
 .chart-cart{
   max-width: 48%;
-  margin: 10px;
+  margin: 15px;
 }

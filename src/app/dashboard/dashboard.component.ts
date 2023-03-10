@@ -3,6 +3,7 @@ import {StatsService} from "../service/stats.service";
 
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,8 +28,9 @@ export class DashboardComponent implements OnInit, AfterContentInit {
   public chartMonth: any;
   lastMonthProfit: any;
   firstEntry:number;
-  yearsArray: any=[];
+  yearsArray: any[] = [];
   months:number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
+  actualYear:any;
   constructor(private statsService: StatsService) {
   }
 
@@ -41,8 +43,10 @@ export class DashboardComponent implements OnInit, AfterContentInit {
     this.constructDataExpense(this.showLastMonths);
     this.firstEntryDate();
     this.generateYearsArray();
+    this.actualYear = new Date().getFullYear()
   }
   ngAfterContentInit(): void {
+
   }
 
   firstEntryDate(){
@@ -53,10 +57,17 @@ export class DashboardComponent implements OnInit, AfterContentInit {
   }
 
   generateYearsArray(){
-    this.statsService.getYears().subscribe( value => this.yearsArray.push(value))
-    console.log(this.yearsArray)
-  }
+    this.statsService.getYears().subscribe( years =>{
+      this.yearsArray.push(years)
+    })
 
+    console.log(this.yearsArray)
+
+  }
+  activeYearDate(year: number){
+    this.actualYear = year;
+
+  }
   actualYearDate(){
     this.startDateYear = new Date(new Date().getFullYear(), 0, 1).toISOString()
     this.endDateYear = new Date(new Date().getFullYear(), 11, 32).toISOString()
@@ -66,8 +77,8 @@ export class DashboardComponent implements OnInit, AfterContentInit {
     this.endDateMonth = new Date(new Date().getFullYear(), new Date().getMonth()-minusMonths, 32).toISOString()
   }
   generateDate(year:number, month: number){
-    this.startDateMonth = new Date(year, month, 1).toISOString()
-    this.endDateMonth = new Date(year, month, 32).toISOString()
+    this.startDateMonth = new Date(year, month-1, 1).toISOString()
+    this.endDateMonth = new Date(year, month-1, 32).toISOString()
   }
 
 

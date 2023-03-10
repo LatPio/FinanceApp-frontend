@@ -25,6 +25,7 @@ export class MonthlyChartComponent implements OnChanges{
     this.constructDataExpense(showLastMonths1);
     this.constructDataIncome(showLastMonths1);
     this.createChartIncomeExpense();
+    // console.log(this.labelsArray)
   }
 
   constructDataIncome(number: SimpleChange){

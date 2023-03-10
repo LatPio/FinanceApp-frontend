@@ -45,7 +45,10 @@ import {MatMenuModule} from "@angular/material/menu";
 import { MonthlyChartComponent } from './dashboard/monthly-chart/monthly-chart.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { LastMonthChartComponent } from './dashboard/last-month-chart/last-month-chart.component';
-
+import { StatisticComponent } from './statistic/statistic.component';
+import { IncomeChartComponent } from './statistic/income-chart/income-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+import { TableComponent } from './statistic/table/table.component'
 
 
 
@@ -71,7 +74,10 @@ import { LastMonthChartComponent } from './dashboard/last-month-chart/last-month
     SearchBarComponent,
     DashboardComponent,
     MonthlyChartComponent,
-    LastMonthChartComponent
+    LastMonthChartComponent,
+    StatisticComponent,
+    IncomeChartComponent,
+    TableComponent
 
   ],
   imports: [
@@ -99,6 +105,7 @@ import { LastMonthChartComponent } from './dashboard/last-month-chart/last-month
     MatCardModule,
     MatMenuModule,
     MatTooltipModule,
+    NgChartsModule,
 
 
   ],

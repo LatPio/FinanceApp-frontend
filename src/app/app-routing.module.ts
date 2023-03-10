@@ -15,6 +15,7 @@ import {UpdateIncomeComponent} from "./income/update-income/update-income.compon
 import {CreateTagComponent} from "./tags/create-tag/create-tag.component";
 import {UpdateTagComponent} from "./tags/update-tag/update-tag.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {StatisticComponent} from "./statistic/statistic.component";
 
 const routes: Routes = [
 
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'expenses', component: ExpensesComponent,  canActivate: [AuthGuard]},
   {path: 'add/expenses', component: CreateExpenseComponent,  canActivate: [AuthGuard]},
   {path: 'edit/expenses/:expenseID', component: EditExpenseComponent,  canActivate: [AuthGuard]},
+  {path: 'statistic', component: StatisticComponent, canActivate: [AuthGuard]},
   {path: 'tags', component: TagsComponent,  canActivate: [AuthGuard]},
   {path: 'add/tags', component: CreateTagComponent,  canActivate: [AuthGuard]},
   {path: 'edit/tags/:tagID', component: UpdateTagComponent,  canActivate: [AuthGuard]}

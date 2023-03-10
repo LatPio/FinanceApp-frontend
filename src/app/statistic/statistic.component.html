@@ -1,0 +1,97 @@
+<form class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Year</mat-label>
+    <mat-select [(ngModel)]="selectedYear" name="year">
+      <mat-option *ngFor="let year of yearsArray" [value]="year">
+        {{year}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<div class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px;">
+  <app-income-chart
+    [months]="months"
+    [selectedYear]="selectedYear"
+
+
+  ></app-income-chart>
+</div>
+
+<div class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px">
+
+  <app-table [months]="months"
+             [selectedYear]="selectedYear"
+
+
+  >
+
+  </app-table>
+
+</div>
+
+
+<!--<div class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px">-->
+<!--  <table class="table table-striped table-hover">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th scope="col">Tags</th>-->
+<!--      <th scope="col" *ngFor="let month of months">{{month}} {{selectedYear}}</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr *ngFor="let taginfo of incomesMap.keys()">-->
+<!--      <th scope="row" >{{taginfo}}</th>-->
+<!--      <td *ngFor="let incom of incomesMap.get(taginfo); let i=index" >-->
+<!--      <span style="color: green">-->
+<!--      {{incom}}/-->
+<!--      </span>-->
+<!--        <span style="color: red" >-->
+<!--        {{expenseMap.get(taginfo)[i]}}-->
+
+<!--      </span>-->
+
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+
+<!--<div class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px">-->
+<!--  <div *ngFor="let taginfo of incomesMap.keys()" >-->
+<!--    <div>-->
+<!--      Income {{taginfo}}:-->
+<!--      <span *ngFor="let incom of incomesMap.get(taginfo)">-->
+<!--      {{incom}};-->
+<!--    </span>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      Expense {{taginfo}}:-->
+
+<!--      <span *ngFor="let expe of expenseMap.get(taginfo)">-->
+<!--      {{expe}};-->
+<!--    </span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<!--<div class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px">-->
+<!--  <div *ngFor="let taginfo of incomesMap.keys()" >-->
+<!--    {{taginfo}}:-->
+<!--    <span *ngFor="let val of incomesMap.get(taginfo)">-->
+<!--      {{val}};-->
+<!--    </span>-->
+<!--  </div>-->
+
+<!--</div>-->
+<!--<div class="information-card mat-elevation-z5" style="margin: 20px; padding: 20px">-->
+<!--  <div *ngFor="let taginfo2 of expenseMap.keys()">-->
+<!--    {{taginfo2}}:-->
+<!--    <span *ngFor="let val of expenseMap.get(taginfo2)">-->
+<!--      {{val}};-->
+<!--    </span>-->
+<!--  </div>-->
+<!--</div>-->
+

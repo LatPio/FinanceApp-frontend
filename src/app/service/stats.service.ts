@@ -57,4 +57,15 @@ export class StatsService {
   getYears():Observable<any>{
     return this.http.get(`${this.baseURL}/listOfYears`)
   }
+
+  getDetailedInfoIncome(year: number):Observable<any>{
+    let parameters = new HttpParams()
+    parameters = parameters.append("year", year);
+    return this.http.get(`${this.baseURL}/detailedInfoIncome`,{params: parameters})
+  }
+  getDetailedInfoExpense(year: number):Observable<any>{
+    let parameters = new HttpParams()
+    parameters = parameters.append("year", year);
+    return this.http.get(`${this.baseURL}/detailedInfoExpense`,{params: parameters})
+  }
 }
