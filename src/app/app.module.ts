@@ -46,9 +46,10 @@ import { MonthlyChartComponent } from './dashboard/monthly-chart/monthly-chart.c
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { LastMonthChartComponent } from './dashboard/last-month-chart/last-month-chart.component';
 import { StatisticComponent } from './statistic/statistic.component';
-import { IncomeChartComponent } from './statistic/income-chart/income-chart.component';
+
 import { NgChartsModule } from 'ng2-charts';
-import { TableComponent } from './statistic/table/table.component'
+
+import { ContentComponent } from './statistic/content/content.component'
 
 
 
@@ -76,8 +77,8 @@ import { TableComponent } from './statistic/table/table.component'
     MonthlyChartComponent,
     LastMonthChartComponent,
     StatisticComponent,
-    IncomeChartComponent,
-    TableComponent
+
+    ContentComponent
 
   ],
   imports: [

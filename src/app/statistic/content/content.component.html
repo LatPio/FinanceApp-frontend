@@ -1,0 +1,39 @@
+
+<div id="contentForPDF" #contentForPDF>
+  <div class="information-card mat-elevation-z5" >
+    <h2>Incomes for {{selectedYear}}:</h2>
+    <canvas  id="IncomeChart1" >{{ chartMonthlyByTagsIncome }}</canvas>
+
+  </div>
+  <div class="information-card mat-elevation-z5" >
+    <h2>Expenses for {{selectedYear}}:</h2>
+    <canvas  id="ExpenseChart" >{{ chartMonthlyByTagsExpense }}</canvas>
+
+  </div>
+  <div class="information-card mat-elevation-z5" >
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Tags</th>
+        <th scope="col" *ngFor="let month of months">{{month}} {{selectedYear}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let taginfo of labels, let i=index">
+        <th scope="row" >{{taginfo}}</th>
+        <td *ngFor="let incom of incomesArrayByMonth[i]; let j=index" >
+      <span style="color: green">
+      {{incom}}/
+      </span>
+          <span style="color: red" >
+        {{expenseArrayByMonth[i][j]}}
+
+      </span>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
