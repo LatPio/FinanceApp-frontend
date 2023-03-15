@@ -1,13 +1,14 @@
 import {AfterViewInit, Component, Input, OnInit, Type, ViewChild} from '@angular/core';
 import {ExpenseModel} from "../service/models/expense-model";
 import {ExpenseService} from "../service/expense.service";
-import {NgbModal, NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {NgModalConfirm} from "../shared/NgModalConfiirm";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortable} from "@angular/material/sort";
+import {ExportXlsxComponent} from "../shared/export-xlsx/export-xlsx.component";
 
 const MODALS: {[name: string]: Type<any>} = { deleteModal: NgModalConfirm,};
 
@@ -20,18 +21,22 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
 
   displayedColumns: string[] = ['id','date', 'name', 'amount', 'currency', 'tags', 'option'];
   dataSource = new MatTableDataSource<ExpenseModel>();
+  expenses: Array<ExpenseModel> = [];
   jsonArray:any=[];
   data = JSON.stringify(this.jsonArray)
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(ExportXlsxComponent) child:ExportXlsxComponent;
+  providedName: string = "Expense";
 
 
   constructor(private expenseService: ExpenseService,
               private router:Router,
               private modalService : NgbModal,
               private toastr: ToastrService) {
+
   }
 
   ngAfterViewInit(): void {
@@ -42,6 +47,7 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
       return JSON.stringify(data).toLocaleLowerCase().includes(filter)
 
     }
+
   }
 
   ngOnInit(): void {
@@ -53,10 +59,12 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
       this.dataSource.data = expense;
     });
   }
-  getAllExpensesWithSpec(){
-    this.expenseService.getAllExpensesWithSpec(JSON.stringify(this.jsonArray)).subscribe(expense => {
+  async getAllExpensesWithSpec(){
+    await this.expenseService.getAllExpensesWithSpec(JSON.stringify(this.jsonArray)).forEach(expense => {
+      this.expenses = expense;
       this.dataSource.data = expense;
     });
+    console.log(this.expenses)
   }
 
   applyFilter(event: Event) {
@@ -107,5 +115,9 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
     this.jsonArray=[];
     this.getAllExpensesWithSpec();
 
+  }
+
+  export() {
+    this.child.exporter()
   }
 }

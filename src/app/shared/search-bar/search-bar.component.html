@@ -21,6 +21,7 @@
       mat-mini-fab
       color="primary"
       aria-label="menu button"
+      matTooltip="Click to show/hide"
       (click)="menuShow()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -64,10 +65,10 @@
 </div>
 
 <div style="padding: 10px">
-  <button mat-mini-fab color="primary" aria-label="Example icon button with a filter list icon" (click)="emitJSON()">
+  <button mat-mini-fab color="primary" (click)="emitJSON()">
     <mat-icon>filter_list</mat-icon>
   </button>
-  <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon" (click)="emitReset()">
+  <button mat-mini-fab color="warn" (click)="emitReset()">
     <mat-icon>cancel</mat-icon>
   </button>
 </div>

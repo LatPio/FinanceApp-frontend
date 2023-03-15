@@ -6,9 +6,9 @@ import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from "ngx-toastr";
 import {MatTableDataSource} from "@angular/material/table";
-import {ExpenseModel} from "../service/models/expense-model";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {ExportXlsxComponent} from "../shared/export-xlsx/export-xlsx.component";
 
 const MODALS: {[name: string]: Type<any>}= {deleteModal: NgModalConfirm};
 
@@ -26,6 +26,11 @@ export class IncomeComponent implements OnInit, AfterViewInit{
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(ExportXlsxComponent) child:ExportXlsxComponent;
+  providedName: string = "Income";
+
+  incomes: Array<IncomeModel> = [];
+
 
   constructor(private incomeService: IncomeService,
               private router: Router,
@@ -36,7 +41,7 @@ export class IncomeComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
   }
   ngAfterViewInit(): void {
-    this.getAllIncomes();
+    this.getAllIncomesWithSpec();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = (data, filter) => {
@@ -48,9 +53,13 @@ export class IncomeComponent implements OnInit, AfterViewInit{
   getAllIncomes() {
     this.incomeService.getAllIncomes().subscribe(income => this.dataSource.data = income);
   }
-  getAllIncomesWithSepc(){
-    this.incomeService.getAllIncomesWithSpec(JSON.stringify(this.jsonArray)).subscribe(
-      incomes => this.dataSource.data = incomes
+  async getAllIncomesWithSpec(){
+    await this.incomeService.getAllIncomesWithSpec(JSON.stringify(this.jsonArray)).forEach(
+      incomes => {
+        this.dataSource.data = incomes;
+        this.incomes = incomes;
+      }
+
     );
   }
   applyFilter(event: Event) {
@@ -88,7 +97,7 @@ export class IncomeComponent implements OnInit, AfterViewInit{
   addFilterData(newItem: any) {
     this.jsonArray = newItem;
 
-    this.getAllIncomesWithSepc();
+    this.getAllIncomesWithSpec();
 
     console.log(this.jsonArray);
     console.log(this.dataSource.data)
@@ -96,7 +105,11 @@ export class IncomeComponent implements OnInit, AfterViewInit{
 
   resetSearch($event: any) {
     this.jsonArray=[];
-    this.getAllIncomesWithSepc();
+    this.getAllIncomesWithSpec();
 
+  }
+
+  export() {
+    this.child.exporter()
   }
 }

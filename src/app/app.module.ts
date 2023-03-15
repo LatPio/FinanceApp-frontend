@@ -49,8 +49,10 @@ import { StatisticComponent } from './statistic/statistic.component';
 
 import { NgChartsModule } from 'ng2-charts';
 
-import { ContentComponent } from './statistic/content/content.component'
-
+import { ContentComponent } from './statistic/content/content.component';
+// import { ExportExpensesComponent } from './expenses/export-expenses/export-expenses.component';
+// import { ExportIncomesComponent } from './income/export-incomes/export-incomes.component';
+import { ExportXlsxComponent } from './shared/export-xlsx/export-xlsx.component'
 
 
 @NgModule({
@@ -78,7 +80,10 @@ import { ContentComponent } from './statistic/content/content.component'
     LastMonthChartComponent,
     StatisticComponent,
 
-    ContentComponent
+    ContentComponent,
+      // ExportExpensesComponent,
+      // ExportIncomesComponent,
+      ExportXlsxComponent
 
   ],
   imports: [
@@ -107,6 +112,8 @@ import { ContentComponent } from './statistic/content/content.component'
     MatMenuModule,
     MatTooltipModule,
     NgChartsModule,
+
+
 
 
   ],

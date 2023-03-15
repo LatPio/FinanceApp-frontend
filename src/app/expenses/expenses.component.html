@@ -2,11 +2,24 @@
 (onEmitJSON)="addFilterData($event)"
 (onEmitReset)="resetSearch($event)"
 ></app-search-bar>
+<div class="row">
+  <div class="col-auto me-auto d-flex flex-row" style="width: 90%">
+    <mat-form-field [style.width.%]=100 [style.padding-top.px]=10 >
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Name or Amount or Currency" #input>
+    </mat-form-field>
+  </div>
+  <div class="col-2 d-flex flex-row-reverse align-items-center" style="width: 5%">
+    <button mat-mini-fab
+            matTooltip="Export to xlsx"
+            color="basic"
+            (click)="export()">
+      <i class="bi bi-filetype-xlsx"></i>
+    </button>
+  </div>
 
-<mat-form-field [style.width.%]=100 [style.padding-top.px]=10 >
-  <mat-label>Search</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Name or Amount or Currency" #input>
-</mat-form-field>
+</div>
+
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="this.dataSource" matSort matSortActive="date" matSortDirection="desc">
@@ -64,3 +77,8 @@
   </table>
   <mat-paginator [showFirstLastButtons] [pageSizeOptions]="[5,10,25,100]" aria-label="Select page of users"></mat-paginator>
 </div>
+
+
+<app-export-xlsx  [database]="expenses" [providedName]="providedName" [hidden]="true"></app-export-xlsx>
+
+
