@@ -1,1 +1,48 @@
-<p>userprofile works!</p>
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <hr />
+    <div class=" col-md-9">
+      <form class="post-form" [formGroup]="userOptionsForm" (ngSubmit)="updateUserOptions()">
+        <div class="form-group">
+          <div class="create-post-heading">Options:</div>
+          <hr />
+          <mat-form-field [style.width.%]=51 appearance="fill">
+            <mat-label>Default Currency </mat-label>
+            <input matInput placeholder="currency" [formControlName]="'defaultCurrency'">
+          </mat-form-field>
+          <mat-form-field [style.width.%]=51 appearance="fill" style="margin-top: 5px">
+            <mat-label>Pagination For Incomes And Expenses</mat-label>
+            <mat-select [formControlName]="'userPagination'" [compareWith]="compare">
+              <mat-option [value]="'5,10,20,50'"> 5,10,20,50 </mat-option>
+              <mat-option [value]="'10,20,25,50'"> 10,20,25,50 </mat-option>
+              <mat-option [value]="'20,25,50,100'"> 20,25,50,100 </mat-option>
+              <mat-option [value]="'25,50,100,200'"> 25,50,100,200 </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field [style.width.%]=51 appearance="fill" style="margin-top: 5px">
+            <mat-label>Default interval of downloaded data of Incomes and Expenses </mat-label>
+            <mat-select [formControlName]="'getLastNumberOfMonthsData'" [compareWith]="compare">
+              <mat-option [value]="0"> Last Month </mat-option>
+              <mat-option [value]="2"> Last Three Months  </mat-option>
+              <mat-option [value]="5"> Last half of the Year </mat-option>
+              <mat-option [value]="11"> Last Year </mat-option>
+              <mat-option [value]="23"> Last Two Years </mat-option>
+              <mat-option [value]="24288"> All </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <span class="d-flex justify-content-end">
+              <div class="row " style="margin: 10px">
+
+                <div class="col">
+                  <button mat-raised-button color="primary">Update</button>
+                </div>
+              </div>
+            </span>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -7,8 +7,11 @@ import {ToastrService} from "ngx-toastr";
 import {NgModalConfirm} from "../shared/NgModalConfiirm";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort, MatSortable} from "@angular/material/sort";
+import {MatSort} from "@angular/material/sort";
 import {ExportXlsxComponent} from "../shared/export-xlsx/export-xlsx.component";
+import {UserOptionsService} from "../service/user-options.service";
+import {UserOptionsModel} from "../service/models/userOptions-model";
+import {SearchCriteria} from "../shared/search-bar/search-bar.component";
 
 const MODALS: {[name: string]: Type<any>} = { deleteModal: NgModalConfirm,};
 
@@ -24,23 +27,23 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
   expenses: Array<ExpenseModel> = [];
   jsonArray:any=[];
   data = JSON.stringify(this.jsonArray)
-
+  pagination: number[] = [];
+  providedName: string = "Expense";
+  options: UserOptionsModel = new UserOptionsModel();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(ExportXlsxComponent) child:ExportXlsxComponent;
-  providedName: string = "Expense";
-
 
   constructor(private expenseService: ExpenseService,
               private router:Router,
               private modalService : NgbModal,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private userOptionsService: UserOptionsService) {
 
   }
 
   ngAfterViewInit(): void {
-    this.getAllExpensesWithSpec();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = (data, filter) => {
@@ -51,20 +54,46 @@ export class ExpensesComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.getOptions();
         }
 
-
+  getOptions(){
+      this.userOptionsService.getUserOptions()
+        .forEach(value => this.options = value)
+        .then(r => {
+          let strArray = this.options.userPagination.split(",")
+          this.pagination = strArray.map(value => Number(value))
+          this.getAllExpensesWithSpec()
+        })
+  }
   getAllExpenses(){
     this.expenseService.getAllExpenses().subscribe(expense => {
       this.dataSource.data = expense;
     });
   }
   async getAllExpensesWithSpec(){
-    await this.expenseService.getAllExpensesWithSpec(JSON.stringify(this.jsonArray)).forEach(expense => {
-      this.expenses = expense;
-      this.dataSource.data = expense;
-    });
-    console.log(this.expenses)
+    if(this.jsonArray.length == 0){
+      let array:any = [];
+      let startDateMonth = new Date(new Date().getFullYear(), new Date().getMonth()-this.options.getLastNumberOfMonthsData, 1)
+
+      let searchCriteriaDateStart: SearchCriteria = {
+        key: 'date',
+        value: startDateMonth.toISOString(),
+        operation: 'DATE_GREATER_THAN_EQUAL'
+      }
+      array.push(searchCriteriaDateStart)
+
+
+      await this.expenseService.getAllExpensesWithSpec(JSON.stringify(array)).forEach(expense => {
+        this.expenses = expense;
+        this.dataSource.data = expense;
+      });
+    } else {
+      await this.expenseService.getAllExpensesWithSpec(JSON.stringify(this.jsonArray)).forEach(expense => {
+        this.expenses = expense;
+        this.dataSource.data = expense;
+      });
+    }
   }
 
   applyFilter(event: Event) {

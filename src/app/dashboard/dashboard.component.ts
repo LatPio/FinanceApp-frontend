@@ -2,14 +2,12 @@ import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {StatsService} from "../service/stats.service";
 
 
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterContentInit {
+export class DashboardComponent implements OnInit {
 
   showLastMonths: number = 12;
   incomeSum: number;
@@ -36,7 +34,7 @@ export class DashboardComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     this.actualYearDate();
-    this.lastMonthDate(1);
+    this.lastMonthDate(0);
     this.getAmountsYear(this.startDateYear, this.endDateYear);
     this.getAmountsMonth(this.startDateMonth, this.endDateMonth);
     this.constructDataIncome(this.showLastMonths);
@@ -45,28 +43,20 @@ export class DashboardComponent implements OnInit, AfterContentInit {
     this.generateYearsArray();
     this.actualYear = new Date().getFullYear()
   }
-  ngAfterContentInit(): void {
-
-  }
 
   firstEntryDate(){
     this.statsService.getFirstEntryDate().subscribe(
       value => this.firstEntry = value.toString().slice(0,4)
     )
-
   }
 
   generateYearsArray(){
     this.statsService.getYears().subscribe( years =>{
       this.yearsArray.push(years)
     })
-
-    console.log(this.yearsArray)
-
   }
   activeYearDate(year: number){
     this.actualYear = year;
-
   }
   actualYearDate(){
     this.startDateYear = new Date(new Date().getFullYear(), 0, 1).toISOString()
@@ -80,8 +70,6 @@ export class DashboardComponent implements OnInit, AfterContentInit {
     this.startDateMonth = new Date(year, month-1, 1).toISOString()
     this.endDateMonth = new Date(year, month-1, 32).toISOString()
   }
-
-
 
   getAmountsYear(startDate: string, endDate: string){
     this.statsService.getAmountIncome(startDate, endDate).subscribe(
@@ -133,17 +121,8 @@ export class DashboardComponent implements OnInit, AfterContentInit {
         })
       this.chartMonthlyIncomeExpense.update();
       }
-
     )
-
   }
-
-  subtractMonths(date: Date, months: number){
-    const dateCopy = new Date(date);
-    dateCopy.setMonth(dateCopy.getMonth()-months);
-    return dateCopy;
-  }
-
 
   changeNumberOfMonth(numbProvided: number) {
     this.showLastMonths = numbProvided;

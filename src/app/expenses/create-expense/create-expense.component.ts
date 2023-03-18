@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ExpenseRequestPayload} from "./expense.request.payload";
 import {Router} from "@angular/router";
 import {ExpenseService} from "../../service/expense.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TagModel} from "../../service/models/tag-model";
 import {TagsService} from "../../service/tags.service";
+import {UserOptionsService} from "../../service/user-options.service";
+import {UserOptionsModel} from "../../service/models/userOptions-model";
 
 @Component({
   selector: 'app-create-expense',
@@ -18,14 +19,14 @@ export class CreateExpenseComponent implements OnInit{
   createExpenseForm:  FormGroup;
   expensePayload: ExpenseRequestPayload;
   tagsList: Array<TagModel> = []
-
+  options: UserOptionsModel = new UserOptionsModel();
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private tagsService: TagsService,
               private expenseService: ExpenseService,
-              // private modalService : NgbModal,   // to add adding expense in modal form
-              private toastr: ToastrService ) {
+              private toastr: ToastrService,
+              private userOptionsService: UserOptionsService) {
     this.expensePayload = {
       name: '',
       currency: '',
@@ -33,19 +34,36 @@ export class CreateExpenseComponent implements OnInit{
       tags: [],
       amount: 0
     }
+    this.getOptions();
   }
+
   ngOnInit(): void {
     this.getAllTags();
     this.createExpenseForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      currency: new FormControl('', Validators.required),
+      currency: new FormControl(this.options.defaultCurrency, Validators.required),
       date: new FormControl(new Date() , Validators.required),
       tags: new FormControl([], Validators.required),
       amount: new FormControl('', Validators.required)
     });
   }
+
   private getAllTags() {
     this.tagsService.getAllTags().subscribe(tag => this.tagsList = tag)
+  }
+
+  async getOptions(){
+    await this.userOptionsService.getUserOptions()
+      .forEach(value => this.options = value).then(value => {
+        this.createExpenseForm = new FormGroup({
+          name: new FormControl('', Validators.required),
+          currency: new FormControl(this.options.defaultCurrency, Validators.required),
+          date: new FormControl(new Date() , Validators.required),
+          tags: new FormControl([], Validators.required),
+          amount: new FormControl('', Validators.required)
+        });
+        }
+      )
   }
 
   createExpense(){

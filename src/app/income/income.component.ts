@@ -9,6 +9,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {ExportXlsxComponent} from "../shared/export-xlsx/export-xlsx.component";
+import {UserOptionsModel} from "../service/models/userOptions-model";
+import {UserOptionsService} from "../service/user-options.service";
+import {SearchCriteria} from "../shared/search-bar/search-bar.component";
 
 const MODALS: {[name: string]: Type<any>}= {deleteModal: NgModalConfirm};
 
@@ -22,24 +25,28 @@ export class IncomeComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['id','date', 'name', 'amount', 'currency', 'tags', 'option'];
   dataSource = new MatTableDataSource<IncomeModel>();
   jsonArray:any=[];
-  data = JSON.stringify(this.jsonArray)
+  data = JSON.stringify(this.jsonArray);
+  pagination: number[] = [];
+  options: UserOptionsModel = new UserOptionsModel();
+  incomes: Array<IncomeModel> = [];
+  providedName: string = "Income";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(ExportXlsxComponent) child:ExportXlsxComponent;
-  providedName: string = "Income";
-
-  incomes: Array<IncomeModel> = [];
-
 
   constructor(private incomeService: IncomeService,
               private router: Router,
               private modalService: NgbModal,
-              private  toastr: ToastrService) {
+              private  toastr: ToastrService,
+              private userOptionsService: UserOptionsService) {
   }
 
   ngOnInit(): void {
+    this.getOptions();
+
   }
+
   ngAfterViewInit(): void {
     this.getAllIncomesWithSpec();
     this.dataSource.paginator = this.paginator;
@@ -49,18 +56,48 @@ export class IncomeComponent implements OnInit, AfterViewInit{
 
     }
   }
+  getOptions(){
+    this.userOptionsService.getUserOptions()
+      .forEach(value => this.options = value)
+      .then(r => {
+        let strArray = this.options.userPagination.split(",")
+        this.pagination = strArray.map(value => Number(value))
+        this.getAllIncomesWithSpec();
 
+      })
+  }
   getAllIncomes() {
     this.incomeService.getAllIncomes().subscribe(income => this.dataSource.data = income);
   }
   async getAllIncomesWithSpec(){
-    await this.incomeService.getAllIncomesWithSpec(JSON.stringify(this.jsonArray)).forEach(
-      incomes => {
-        this.dataSource.data = incomes;
-        this.incomes = incomes;
-      }
+    if(this.jsonArray.length == 0){
+      let array:any = [];
+      let startDateMonth = new Date(new Date().getFullYear(), new Date().getMonth()-this.options.getLastNumberOfMonthsData, 1)
 
-    );
+      let searchCriteriaDateStart: SearchCriteria = {
+        key: 'date',
+        value: startDateMonth.toISOString(),
+        operation: 'DATE_GREATER_THAN_EQUAL'
+      }
+      array.push(searchCriteriaDateStart)
+
+      await this.incomeService.getAllIncomesWithSpec(JSON.stringify(array)).forEach(
+        incomes => {
+          this.dataSource.data = incomes;
+          this.incomes = incomes;
+        }
+
+      );
+    }else{
+      await this.incomeService.getAllIncomesWithSpec(JSON.stringify(this.jsonArray)).forEach(
+        incomes => {
+          this.dataSource.data = incomes;
+          this.incomes = incomes;
+        }
+
+      );
+    }
+
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

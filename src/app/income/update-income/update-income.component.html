@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="row">
+  <div class="row d-flex justify-content-center">
     <hr />
-    <div class="create-post-container col-md-9">
+    <div class="col-md-9">
       <form class="post-form" [formGroup]="incomeForm" (ngSubmit)="updateIncome()">
         <div class="form-group">
-          <div class="create-post-heading">Update Income</div>
+          <div>Update Income</div>
           <hr />
           <mat-form-field [style.width.%]=100 appearance="fill">
             <mat-label>Name</mat-label>

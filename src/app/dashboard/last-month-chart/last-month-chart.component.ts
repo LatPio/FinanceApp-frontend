@@ -21,9 +21,7 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
 
 
   constructor(private statsService: StatsService) {
-    // this.lastMonthDate();
-    // this.constructDataIncome(this.startDateMonth, this.endDateMonth);
-    // this.createChartIncomeExpense();
+
   }
   ngOnInit(): void {
     this.createChartIncomeExpense();
@@ -37,11 +35,6 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
     this.constructDataIncome(dateStart, endDate);
     this.createChartIncomeExpense();
   }
-
-  // lastMonthDate() {
-  //   this.startDateMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toISOString()
-  //   this.endDateMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 32).toISOString()
-  // }
 
   constructDataIncome(dateStart: SimpleChange, endDate: SimpleChange){
     this.statsService.getAmountsByTagsByIncome(dateStart.currentValue, endDate.currentValue).subscribe(value => {
@@ -59,7 +52,6 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
   constructDataExpense(dateStart: SimpleChange, endDate: SimpleChange){
     this.statsService.getAmountsByTagsByExpense(dateStart.currentValue, endDate.currentValue).subscribe(value => {
         Object.entries(value).forEach(([k,v]) => {
-          // this.labelsArray.push(k);
           if (typeof v === "number") {
             this.expenseArray.push(v);
           }
@@ -68,8 +60,6 @@ export class LastMonthChartComponent implements OnChanges, OnInit{
       }
     )
   }
-
-
 
   createChartIncomeExpense(){
 

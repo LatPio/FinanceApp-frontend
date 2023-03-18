@@ -6,6 +6,8 @@ import {IncomeService} from "../../service/income.service";
 import {ToastrService} from "ngx-toastr";
 import {TagsService} from "../../service/tags.service";
 import {TagModel} from "../../service/models/tag-model";
+import {UserOptionsService} from "../../service/user-options.service";
+import {UserOptionsModel} from "../../service/models/userOptions-model";
 
 @Component({
   selector: 'app-create-income',
@@ -17,13 +19,15 @@ export class CreateIncomeComponent implements  OnInit{
   createIncomeForm: FormGroup;
   incomePayload: IncomeRequestPayload;
   tagsList: Array<TagModel> = []
+  options: UserOptionsModel = new UserOptionsModel();
 
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
               private incomeService: IncomeService,
               private toastr: ToastrService,
-              private tagsService: TagsService) {
+              private tagsService: TagsService,
+              private userOptionsService: UserOptionsService) {
     this.incomePayload = {
       name:'',
       currency: '',
@@ -31,6 +35,7 @@ export class CreateIncomeComponent implements  OnInit{
       tags:[],
       amount: 0
     }
+    this.getOptions();
   }
 
   ngOnInit(): void {
@@ -47,6 +52,21 @@ export class CreateIncomeComponent implements  OnInit{
   private getAllTags() {
     this.tagsService.getAllTags().subscribe(tag => this.tagsList = tag)
   }
+
+  async getOptions(){
+    await this.userOptionsService.getUserOptions()
+      .forEach(value => this.options = value).then(value => {
+          this.createIncomeForm = new FormGroup({
+            name: new FormControl('', Validators.required),
+            currency: new FormControl(this.options.defaultCurrency, Validators.required),
+            date: new FormControl(new Date() , Validators.required),
+            tags: new FormControl([], Validators.required),
+            amount: new FormControl('', Validators.required)
+          });
+        }
+      )
+  }
+
   createIncome(){
     this.incomePayload.name = this.createIncomeForm.get('name')?.value;
     this.incomePayload.currency = this.createIncomeForm.get('currency')?.value;
