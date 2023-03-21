@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -46,13 +46,10 @@ import { MonthlyChartComponent } from './dashboard/monthly-chart/monthly-chart.c
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { LastMonthChartComponent } from './dashboard/last-month-chart/last-month-chart.component';
 import { StatisticComponent } from './statistic/statistic.component';
-
 import { NgChartsModule } from 'ng2-charts';
-
 import { ContentComponent } from './statistic/content/content.component';
-// import { ExportExpensesComponent } from './expenses/export-expenses/export-expenses.component';
-// import { ExportIncomesComponent } from './income/export-incomes/export-incomes.component';
 import { ExportXlsxComponent } from './shared/export-xlsx/export-xlsx.component'
+import {AppConfigModule} from "./app-config.module";
 
 
 @NgModule({
@@ -79,11 +76,8 @@ import { ExportXlsxComponent } from './shared/export-xlsx/export-xlsx.component'
     MonthlyChartComponent,
     LastMonthChartComponent,
     StatisticComponent,
-
     ContentComponent,
-      // ExportExpensesComponent,
-      // ExportIncomesComponent,
-      ExportXlsxComponent
+    ExportXlsxComponent
 
   ],
   imports: [
@@ -112,17 +106,15 @@ import { ExportXlsxComponent } from './shared/export-xlsx/export-xlsx.component'
     MatMenuModule,
     MatTooltipModule,
     NgChartsModule,
-
-
-
-
+    AppConfigModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
     multi: true,
+  }
 
-  }],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

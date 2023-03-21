@@ -1,10 +1,11 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {EventEmitter, Inject, Injectable, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {SignupRequestPayload} from "../signup/signup-request.payload";
 import {map, Observable, tap} from "rxjs";
 import {LoginRequestPayload} from "../login/login.request.payload";
 import {LoginResponsePayload} from "../login/login.response.payload";
 import {LocalStorageService} from "ngx-webstorage";
+import {APP_CONFIG, AppConfig} from "../../app-config.module";
 
 @Injectable({
   providedIn: 'root'
@@ -14,31 +15,28 @@ export class AuthService {
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() userEmail: EventEmitter<string> = new EventEmitter();
 
-
-
   refreshTokenPayload = {
     refreshToken: this.getRefreshToken(),
     username: this.getUserName()
   }
 
     constructor(private http:HttpClient,
-                private localStorage:LocalStorageService) { }
-
+                private localStorage:LocalStorageService,
+                @Inject(APP_CONFIG) private config: AppConfig) { }
 
   signup(signupRequestPayload: SignupRequestPayload) : Observable<any>{
-      const url = 'http://localhost:8080/api/auth/signup';
+      const url = `${this.config.apiEndpoint}/auth/signup`;
       return this.http.post(url, signupRequestPayload, {responseType: 'text'});
   }
 
   login(loginRequestPayload: LoginRequestPayload) : Observable<any>{
-    const url = 'http://localhost:8080/api/auth/login';
+    const url = `${this.config.apiEndpoint}/auth/login`;
     return this.http.post<LoginResponsePayload>(url, loginRequestPayload)
       .pipe(map(data => {
         this.localStorage.store('token', data.token);
         this.localStorage.store('refreshToken', data.refreshToken);
         this.localStorage.store('expiresAt', data.expiresAt);
         this.localStorage.store('email', data.email)
-
 
         this.loggedIn.emit(true)
         this.userEmail.emit(data.email)
@@ -51,11 +49,10 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.http.post<LoginResponsePayload>('http://localhost:8080/api/auth/refresh/token', this.refreshTokenPayload)
+    return this.http.post<LoginResponsePayload>(`${this.config.apiEndpoint}/auth/refresh/token`, this.refreshTokenPayload)
       .pipe(tap(response => {
         this.localStorage.clear('token');
         this.localStorage.clear('expiresAt');
-
         this.localStorage.store('token', response.token);
         this.localStorage.store('expiresAt', response.expiresAt);
       }));
@@ -78,7 +75,7 @@ export class AuthService {
   }
 
   logout() {
-    this.http.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,{responseType: 'text'})
+    this.http.post(`${this.config.apiEndpoint}/auth/logout`, this.refreshTokenPayload,{responseType: 'text'})
       .subscribe( (data)=> {
         console.log(data);
     }, error => {
